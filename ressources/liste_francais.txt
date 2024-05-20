@@ -18943,8 +18943,6 @@ spéculateurs
 spéculation
 spéculations
 speech
-speed
-sperme
 sphère
 sphères
 sphérique
@@ -20399,11 +20397,6 @@ urgences
 urgent
 urgente
 urgents
-urine
-uriner
-urnes
-us
-usa
 usage
 usager
 usagers
@@ -20947,7 +20940,6 @@ volumes
 volumineux
 volupté
 volute
-vomir
 vont
 vos
 votant

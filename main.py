@@ -1,9 +1,11 @@
 #IMPORTS
 from tkinter import *
 import random
-import time
+
 
 #GLOBALES
+
+#On crée les clés des différentes salles et on met leurs valeurs à False
 global key_verbal_memory 
 global key_images_memory 
 global key_pattern_memory
@@ -12,6 +14,7 @@ key_verbal_memory = False
 key_images_memory = False
 key_pattern_memory = False
 
+#On crée les variables des meilleurs scores de chaque salle et on les met à zéro
 global MVHighestScore
 global MIHighestScore
 global MPHighestScore
@@ -22,29 +25,38 @@ MIHighestScore = 0
 MPHighestScore = 0
 MIXHighestScore = 0
 
+#On crée les coordonnées de notre sprite (personnage) et on les définit à l'origine
 global coords
 coords = (400, 300)
 
 #SCRIPT GENERAL
 def script():
 
+  #On remet les coordonnées à 0
   def reset_coords():
     coords = (400, 300)
 
   #FONCTION DE LA MEMOIRE VERBALE
   def verbal_memory_start():
+    #On met les coordonnées à zéro
     reset_coords()
+    #On crée une liste vide qui va contenir les mots déjà vus
     SeenWords = []
 
+    #Fonction pour gérer la fin de la mémoire verbale
     def restart_mv():
+
+      #Fonction qui relance la mémoire verbale
       def mvrestart():
         MVRestartFrame.destroy()
         verbal_memory_start()
-      
+
+      #Fonction qui ferme la mémoire verbale et réouvre la fenêtre principale
       def mv_quit():
         MVRestartFrame.destroy()
         script()
 
+      #Fenêtre de fin de partie de mémoire verbale
       MVFrame.destroy()
       MVRestartFrame = Tk()
       MVRestartFrame.title("Partie Terminée | Mémoire Verbale")
@@ -56,10 +68,11 @@ def script():
       MVRestartMainFrame = Frame(MVRestartFrame, relief=GROOVE)
       MVRestartMainFrame.pack(side=TOP)
       score = mvscore.get()
+      #Si le joueur a gagné (au moins 50 points)
       if score >= 50:
         MVWinLab = Label(MVRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
         MVWinLab.pack(side=TOP)
-        MVWinLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore}!\n Vous obtenez la clé de la Mémoire Verbale !"), font=("Arial", 10))
+        MVWinLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Vous obtenez la clé de la Mémoire Verbale !"), font=("Arial", 10))
         MVWinLabSubLab.pack(side=TOP, pady=30)
         cle_verbal_memory = PhotoImage(file="textures/cles/cle_verbal_memory.png")
         CanvaCle = Canvas(MVRestartMainFrame, width=80, height=80)
@@ -67,12 +80,12 @@ def script():
         CanvaCle.create_image(0, 0, anchor=NW, image=cle_verbal_memory)
         CanvaCle.image = cle_verbal_memory
 
-
+      #Si le joueur a perdu (moins de 50 lignes)
       else:
         MVLoseLab = Label(MVRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
         MVLoseLab.pack(side=TOP)
         diff = (50 - score)
-        MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
+        MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
         MVLoseLabSubLab.pack(side=TOP, pady=30)
       MVRestartButtons = Frame(MVRestartFrame, relief=GROOVE)
       MVRestartButtons.pack(side=TOP, pady=10)
@@ -82,7 +95,7 @@ def script():
       MVQuitButton.pack(side=RIGHT, padx=20, pady=10)
 
 
-
+    #Fonction qui met à jour le nombre de coeur en fonction du nombre de vies restantes
     def MVcheck_vie():
       global mvvies
       if mvvies == 2:
@@ -97,7 +110,7 @@ def script():
         restart_mv()
 
 
-    #Lancement du jeu de mémoir verbale
+    #Lancement du jeu de mémoire verbale
     def VerbalMemoryStart():
       global mvvies
       global mvcoup
@@ -202,22 +215,20 @@ def script():
         mvscore.set(score)
         MVcheckScore()
 
-    #Affiches les règles de la mémoire verbale dans une nouvellle fen^tre
+    #Affiches les règles de la mémoire verbale dans une nouvellle fenêtre
     def MVreglesPrint():
       def MVregles_quit():
         MVregles.destroy()
       MVregles = Tk()
       MVregles.title("Règles | Mémoire Verbale")
       MVregles.geometry("250x200")
-
       MVreglesText = Label(MVregles, text="Bienvenue dans le jeu Mémoire Verbale \n Les règles de ce jeu sont simples: \n Vous devez indiquer si vous avez déjà \n vu le mot qui apparait grâce \n aux boutons 'Déjà Vu' et \n 'Nouveau Mot'. Vous devez obtenir \n 50 poits pour récupérer la \n clé de l'épreuve. \n Vous pouvez obtenir un \neaster egg si vous parvenez à \nun certain nombre de points. \n Bonne chance !")
       MVreglesText.pack(side=TOP, padx=10, pady=10)
-
       MVreglesButton = Button(MVregles, text="OK", command=MVregles_quit, background="aquamarine1")
       MVreglesButton.pack(side=BOTTOM, padx=10, pady=10)
-
       MVregles.mainloop()
 
+    #Fonction qui compare le score de mémoire verbale avec certaines valeurs (victoire et easter egg)
     def MVcheckScore():
       if mvscore.get() == 50:
         key_verbal_memory = True
@@ -225,57 +236,57 @@ def script():
       if mvscore.get() == 75:
         verbal_memory_hint()
 
+    #Fonction pour donner un indice sur un easter egg si le joueur atteint 75 points dans la mémoire verbale dans une nouvelel fenêtre
     def verbal_memory_hint():
+
+      #Fonction pour quitter la fenêtre d'indice
       def mvindice_quit():
         MVIndice.destroy()
 
       MVIndice = Tk()
       MVIndice.title("INDICE N°1 |Mémoire Verbale")
-      MVIndice.geometry("400x300")
-
+      MVIndice.geometry("400x200")
       MVIndiceMainFrame = Frame(MVIndice, borderwidth=1, relief=GROOVE)
       MVIndiceMainFrame.pack(side=TOP)
-
       MVIndiceText = Label(MVIndiceMainFrame, text="Bravo pour avoir atteint 75 points dans le jeu de mémoire verbale,\n voici un indice pour accéder a une salle secrète:")
       MVIndiceText.pack(side=TOP, padx=5)
-
       MVIndiceIndice = Label(MVIndiceMainFrame, text="Code césar - partie 1")
       MVIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
-
       MVIndiceButton = Button(MVIndice, text="Quitter", command=mvindice_quit, background="aquamarine1")
       MVIndiceButton.pack(side=BOTTOM)
       MVIndice.mainloop()
 
+    #Fonction qui donne la clé de mémoire verbale si le joueur atteint 50 points dans une nouvelle fenêtre
     def verbal_memory_reussi():
+      #Fonction pour quitter la fenêtre d'annonce de victoire
       def mvreussi_quit():
         MVReussi.destroy()
 
       MVReussi = Tk()
       MVReussi.title("Réussite | Mémoire Verbale")
       MVReussi.geometry("400x150")
-
       MVReussiText = Label(MVReussi, text="Bravo, vous avez réussi l'épreuve de mémoire \n verbale et avez obtenu une clé !")
       MVReussiText.pack(side=TOP, padx=15, pady=25)
-
       MVReussiButton = Button(MVReussi, text="OK", command=mvreussi_quit, background="aquamarine1")
       MVReussiButton.pack(side=BOTTOM, padx=15, pady=15)
       MVReussi.mainloop()
 
 
     #TKINTER MEMOIRE VERBALE
+
+    #On crée notre fenêtre de mémoire verbale
     MVFrame = Tk()
 
+    #On crée les variables Tkinter de mémoire verbale
     mvHighestScore = IntVar()
     motVar = StringVar()
     mvscore = IntVar()
-
     MVFrame.title("Mémoire Verbale | Memory Game")
     MVFrame.geometry("600x500")
 
-  
+    #On crée les différents éléments de la fenêtre
     FrameInfos = Frame(MVFrame, borderwidth=1, relief=GROOVE)
     FrameInfos.pack(side=TOP, padx=5)
-
     MemoireVerbaleLabel = Label(FrameInfos, text="Mémoire Verbale", font=("Arial",30))
     MemoireVerbaleLabel.pack(padx=5, pady=5)
 
@@ -296,53 +307,52 @@ def script():
     StartBTN = Button(FrameJeu, command=VerbalMemoryStart, text="Commencer")
     StartBTN.pack(side=TOP)
 
-
-
     FrameWord = Frame(FrameJeu, relief=GROOVE)
-
     CurrentWord = Label(FrameWord, textvariable=motVar, font=("Arial", 15))
     CurrentWord.pack(side=TOP, pady=20)
 
     dejavuBTN = Button(FrameJeu, text="Déjà Vu", command=check_dejavu, background="azure", font=("Arial", 10))
     nouveaumotBTN = Button(FrameJeu, text="Nouveau Mot", command=check_nouveau_mot, background="azure", font=("Arial",10))
 
+
     FrameVie = Frame(MVFrame, borderwidth=1, relief=GROOVE)
     FrameVie.pack(side=BOTTOM, pady=75)
-   
-
     ThreeHearts = PhotoImage(file="textures/vie/3hearts.png")
     TwoHearts = PhotoImage(file="textures/vie/2hearts.png")
     OneHeart = PhotoImage(file="textures/vie/1heart.png")
-
-
     CanvaVie3 = Canvas(FrameVie, width=ThreeHearts.width(), height=ThreeHearts.height())
     CanvaVie3.create_image(0, 0, anchor=NW, image=ThreeHearts)
     CanvaVie3.pack(side=BOTTOM)
 
-
+    #On donne la valeur du meilleur score de mémoire verbale à la variable tKinter de même nom
     mvHighestScore.set(MVHighestScore)
 
+    #On lance l'éxécution de la fenêtre de mémoire verbale
     MVFrame.mainloop()
 
   #FONCTION MEMOIRE IMAGES
   def images_memory_start():
+    #On remet les coordonnées à zéro
     reset_coords()
+    #On crée on liste vide qui contiendra les images qui sont déjà apparues
     SeenPics = []
+    #On crée les variables globales current_image et current_image_id qui vont contenir et afficher les images
     global current_image, current_image_id
     current_image = None
     current_image_id = None
-    coords = (400,300)
 
-
+    #Fonction pour gérer la fin de mémoire des images
     def restart_mi():
+      #Fonction pour relancer une partie de mémoire des images
       def mirestart():
         MIRestartFrame.destroy()
         images_memory_start()
-      
+      #Fonction pour quitter la mémoire des images et relancer le script principal
       def mi_quit():
         MIRestartFrame.destroy()
         script()
 
+      #Fenêtre de fin de partie de mémoire des images
       MIFrame.destroy()
       MIRestartFrame = Tk()
       MIRestartFrame.title("Partie Terminée | Mémoire des Images")
@@ -354,10 +364,11 @@ def script():
       MIRestartMainFrame = Frame(MIRestartFrame, relief=GROOVE)
       MIRestartMainFrame.pack(side=TOP)
       score = miscore.get()
+      #Si le joueur a gagné la partie (au moins 50 points)
       if score >= 50:
         MIWinLab = Label(MIRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
         MIWinLab.pack(side=TOP)
-        MIWinLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Vous obtenez la clé de la Mémoire des Images !"), font=("Arial", 10))
+        MIWinLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore} !\n Vous obtenez la clé de la Mémoire des Images !"), font=("Arial", 10))
         MIWinLabSubLab.pack(side=TOP, pady=30)
         cle_images_memory = PhotoImage(file="textures/cles/cle_images_memory.png")
         CanvaCle = Canvas(MIRestartMainFrame, width=80, height=80)
@@ -365,7 +376,7 @@ def script():
         CanvaCle.create_image(0, 0, anchor=NW, image=cle_images_memory)
         CanvaCle.image = cle_images_memory
 
-
+      #Si le joueur a perdu la partie (moins de 50 points)
       else:
         MILoseLab = Label(MIRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
         MILoseLab.pack(side=TOP)
@@ -380,7 +391,7 @@ def script():
       MIQuitButton.pack(side=RIGHT, padx=20, pady=10)
 
 
-
+    #Fonction qui met à jour les coeurs et ferme le jeu si la vie arrive à 0
     def MIcheck_vie():
       global mivies
       if mivies == 2:
@@ -404,14 +415,13 @@ def script():
       FrameCanvaPic.pack(side=TOP)
       nouvelleimageBTN.pack(side=RIGHT, padx=20)
       dejavuBTN.pack(side=LEFT, padx=20)
-      current_path = random.choice(image_chemin)
-      current_image = PhotoImage(file=current_path)
       CanvaPic.delete("all")
-      current_image_id = CanvaPic.create_image(80, 80, image=current_image, anchor=NW)
+      current_image_id = CanvaPic.create_image(0, 0, image=current_image, anchor=NW)
+      SeenPics = []
 
 
 
-    #Fonction pour choisir un mot
+    #Fonction pour choisir une image
     def choice_image():
       global micoup
       randomizer = random.randint(0,11)
@@ -420,9 +430,10 @@ def script():
       else:
         current_path = random.choice(image_chemin)
         current_image = PhotoImage(file=current_path)
-      CanvaPic.delete("current_image_id")
-      current_image_id = CanvaPic.create_image(80, 80, image=current_image, anchor=NW)
+      CanvaPic.delete("all")
+      current_image_id = CanvaPic.create_image(0, 0, image=current_image, anchor=NW)
       CanvaPic.image = current_image
+      print(SeenPics)
 
     #Fonction si le joueur a cliqué sur le bouton déjà vu
     def micheck_dejavu ():
@@ -446,8 +457,6 @@ def script():
         MIcheck_vie()
         micoup += 1
         choice_image()
-
-
 
     #Fonction si le joueur a cliqué sur nouvelle image
     def check_nouvelle_image ():
@@ -477,7 +486,7 @@ def script():
           SeenPics.append(current_image)
           choice_image()  
 
-    #Affiches les règles de la mémoire des images dans une nouvellle fen^tre
+    #Affiches les règles de la mémoire des images dans une nouvellle fenêtre
     def MIreglesPrint():
       def MIregles_quit():
         MIregles.destroy()
@@ -493,6 +502,7 @@ def script():
 
       MIregles.mainloop()
 
+    #Fonction qui s'active si on a 50 ou 75 points
     def MIcheckScore():
       if miscore.get() == 50:
         key_images_memory = True
@@ -500,66 +510,72 @@ def script():
       if miscore.get() == 75:
         images_memory_hint()
 
+    #Fonction qui donne un indice un easter egg si on a 75 points dans une nouvelle fenêtre
     def images_memory_hint():
+      #Fonction pour quitter la fenêtre d'indice
       def miindice_quit():
         MIIndice.destroy()
 
       MIndice = Tk()
       MIndice.title("INDICE N°2 |Mémoire des Images")
-      MIndice.geometry("400x300")
-
+      MIndice.geometry("400x200")
       MIIndiceMainFrame = Frame(MIndice, borderwidth=1, relief=GROOVE)
       MIIndiceMainFrame.pack(side=TOP)
-
       MIIndiceText = Label(MIIndiceMainFrame, text="Bravo pour avoir atteint 75 points dans le jeu de mémoire des images,\n voici un indice pour accéder a une salle secrète:")
       MIIndiceText.pack(side=TOP, padx=5)
-
       MIIndiceIndice = Label(MIIndiceMainFrame, text="Code césar - partie 2")
       MIIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
-
       MIIndiceButton = Button(MIIndice, text="Quitter", command=miindice_quit, background="aquamarine1")
       MIIndiceButton.pack(side=BOTTOM)
       MIIndice.mainloop()
 
+    #Fonction qui donne la clé de mémoire des images si on a 50 points dans une nouvelle fenêtre
     def images_memory_reussi():
+      #Fonction qui ferme la fenêtre de victoire de mémoire des images
       def mireussi_quit():
         MIReussi.destroy()
 
       MIReussi = Tk()
       MIReussi.title("Réussite | Mémoire des Images")
       MIReussi.geometry("400x150")
-
       MIReussiText = Label(MIReussi, text="Bravo, vous avez réussi l'épreuve de mémoire \n des images et avez obtenu une clé !")
       MIReussiText.pack(side=TOP, padx=15, pady=25)
-
       MIReussiButton = Button(MIReussi, text="OK", command=mireussi_quit, background="aquamarine1")
       MIReussiButton.pack(side=BOTTOM, padx=15, pady=15)
       MIReussi.mainloop()
 
 
     #TKINTER MEMOIRE DES IMAGES
+
+    #On crée la fenêtre de mémoire des images
     MIFrame = Tk()
 
+    #On crée les variables Tkinter de mémoire des images
     miHighestScore = IntVar()
     miscore = IntVar()
 
+    #On crée une liste vide qui va contenir le chemin de toutes les images de la mémoire des images
     image_chemin = []
 
+    #On met dans une liste le chemin de toutes les images de la mémoire des images
     for i in range(3):
       image_chemin.append(f"ressources/images/image_{i}.png")
 
+    #On défini le chemin de l'image actuel comme un élément aléatoire de al liste des chemins
+    current_path = random.choice(image_chemin)
+
+    #On charge l'image qui a pour chemin current_path
+    current_image = PhotoImage(file=current_path)
 
 
     MIFrame.title("Mémoire des Images | Memory Game")
     MIFrame.geometry("600x500")
 
-  
+    #On crée les différents éléments Tkinter de la mémoire des images
     FrameInfos = Frame(MIFrame, borderwidth=1, relief=GROOVE)
     FrameInfos.pack(side=TOP, padx=5)
-
     MemoireImagesLabel = Label(FrameInfos, text="Mémoire des Images", font=("Arial",30))
     MemoireImagesLabel.pack(padx=5, pady=5)
-
     MIReglesBTN = Button(FrameInfos, text="Règles", font=("Arial", 10), command=MIreglesPrint, background="aquamarine1")
     MIReglesBTN.pack(side=RIGHT)
 
@@ -580,29 +596,24 @@ def script():
 
 
     FrameCanvaPic = Frame(FrameJeu, relief=GROOVE)
-
-    CanvaPic = Canvas(FrameCanvaPic, width=80, height=80, background="pink")
+    CanvaPic = Canvas(FrameCanvaPic, width=80, height=80)
     CanvaPic.pack(side=TOP, pady=20)
-
     dejavuBTN = Button(FrameJeu, text="Déjà Vu", command=micheck_dejavu, background="azure", font=("Arial", 10))
     nouvelleimageBTN = Button(FrameJeu, text="Nouvelle Image", command=check_nouvelle_image, background="azure", font=("Arial",10))
 
     FrameVie = Frame(MIFrame, relief=GROOVE)
     FrameVie.pack(side=TOP, pady=25)
-   
-
     ThreeHearts = PhotoImage(file="textures/vie/3hearts.png")
     TwoHearts = PhotoImage(file="textures/vie/2hearts.png")
     OneHeart = PhotoImage(file="textures/vie/1heart.png")
-
-
     CanvaVie3 = Canvas(FrameVie, width=ThreeHearts.width(), height=ThreeHearts.height())
     CanvaVie3.create_image(0, 0, anchor=NW, image=ThreeHearts)
     CanvaVie3.pack(side=BOTTOM)
 
-
+    #On donne la valeur du meilleur score de mémoire des images à la variable tKinter de même nom
     miHighestScore.set(MIHighestScore)
 
+    #On fait tourner la fenêtre de mémoire des images
     MIFrame.mainloop()
 
   #FONCTION MEMOIRE PATTERNS
@@ -612,17 +623,19 @@ def script():
     MPFrame.title("Mémoire de pattern | Mémory Game")
     MPFrame.geometry("800x600")
 
-  #FONCTION MIX
+  #FONCTION MEMOIRES MIX
   def mix_start():
 
-
+    #Si le joueur possède les trois clés, on lance le jeu des mémoires mix
     if (key_images_memory == True) and (key_pattern_memory == True) and (key_verbal_memory == True):
       mainFrame.destroy()
       MIXFrame = Tk()
       MIXFrame.mainloop()
       MIXFrame.title("Mémoires Mix | Mémory Game")
       MIXFrame.geometry("800x600")
+    #Si le joueur ne possède pas toutes les clés, on crée une fenêtre qui affiche les scores à faire pour obtenir toutes les clés
     else:
+      #Fonction qui ferme la fenêtre d'erreur
       def error_quit():
         Error.destroy()
       Error = Tk()
@@ -673,23 +686,31 @@ def script():
       ErrorQuitButton = Button(Error, text="OK", command=error_quit, background="aquamarine1")
       ErrorQuitButton.pack(side=BOTTOM, pady=5)
 
+      #On lance la fenêtre d'erreur
       Error.mainloop()
-
-
 
   #FONCTION DE DEPLACEMENT
   def deplacement(event):
+    #On définit en global les coordonnées du rectangle
     global coords
+    #On définit la variable touche qui prend pour valeur la touche du clavier appuyée
     touche = event.keysym
 
+    #Si la touche est la flèche du haut et que le sprite n'a pas déjà atteint le mur du haut, on monte de 20 pixels
     if touche == "Up" and coords[1] > 40:
         coords = (coords[0], coords[1] - 20)
+    #Si la touche est la flèche du bas et que le sprite n'a pas déjà atteint le mur du bas, on descend de 20 pixels
     elif touche == "Down" and coords[1] < 540:
         coords = (coords[0], coords[1] + 20)
+    #Si la touche est la flèche de droite et que le sprite n'a pas déjà atteint le mur de droite, on se déplace de 20 pixels à droite
     elif touche == "Right" and coords[0] < 740:
         coords = (coords[0] + 20, coords[1])
+    #Si la touche est la flèche de gauche et que le sprite n'a pas déjà atteint le mur de gauche, on se déplace de 20 pixels à gauche
     elif touche == "Left" and coords[0] > 40:
         coords = (coords[0] - 20, coords[1])
+    #Si le touche est "e", et que les coordonnées du sprite correspondent aux coordonnées des portes,
+    #On appelle les différentes fonctions des jeux de mémoires et on remet les coordonnées à 0
+
     elif touche == "e":
         if (coords[0] == 40 and coords[1] == 300) or (coords[0] == 40 and coords[1] == 280):
             coords = (400,300)
@@ -706,41 +727,46 @@ def script():
         elif (coords[0] == 400 and coords[1] == 40) or (coords[0] == 380 and coords[1] == 40):
             coords = (400, 300)
             mix_start()
+    #Si la touche est différente de "e", on met à jour les coordonnées du rectangle
     if touche != "e":
         canva_tableau.coords(rectangle, coords[0], coords[1])
 
 
-    
-  ### TKINTER ###
-
-
   #TKINTER SALLE PRINCIPALE#
+
+  #On crée la fenêtre principale
   mainFrame = Tk()
   mainFrame.title("Memory Game | Thomas & Gabriel")
   mainFrame.geometry("800x600")
 
+  #On crée un tableau dans lequel le sprite se déplace
+  canva_tableau = Canvas(mainFrame, width=800, height=600)
 
-  canva_tableau = Canvas(mainFrame, width=800, height=600, bg="green")
-
-
+  #On charge et importe les textures de la map
   MapPixelArt = PhotoImage(file="textures/map_pixelart.png")
   canva_tableau.create_image(0, 0, anchor=NW, image=MapPixelArt)
 
+  #On charge et importe les textures du sprite
   sprite = PhotoImage(file="textures/sprite.png")
   rectangle = canva_tableau.create_image(400, 300, image=sprite, anchor=NW)
 
+  #On ajoute un écouteur d'évènement sur les touches du clavier, activant la fonction deplacement
   canva_tableau.focus_set()
   canva_tableau.bind("<Key>", deplacement)
 
   canva_tableau.pack()
 
-
+  #On ouvre la fenêtre pincipale
   mainFrame.mainloop()
 
+#FONCTION DU DEMARRAGE
 def startGame():
+  #Fonction qui affiche les credits du jeu dans une nouvelle fenêtre
   def credits():
+    #Fonction qui ferme la fenêtre des crédits du jeu
     def credits_quit():
       credits.destroy()
+    #On crée la fenêtre des crédits, ainsi que tous ses éléments
     credits = Tk()
     credits.title("Crédits | Memory Game")
     credits.geometry("400x300")
@@ -756,36 +782,11 @@ def startGame():
     scrollbarCredits.pack(side=RIGHT, fill=Y)
     
     creditsText.tag_configure("center", justify='center')
-
-    creditsText.insert(END, "Le jeu 'Memory Game' a été réalisé par\n","center")
-    creditsText.insert(END, "Thomas KELEMEN & Gabriel CADEAU-FLAUJAT,\n","center")
-    creditsText.insert(END, "deux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\n","center")
-    creditsText.insert(END, "Le jeu 'Memory Game' a été inspiré de la plateforme de jeu 'Human Benchmark'.\n","center")
-    creditsText.insert(END, "\n","center")
-    creditsText.insert(END, "Développement :\n","center")
-    creditsText.insert(END, "'Memory Game' a été développé entierement par Thomas KELEMEN et Gabriel CADEAU-FLAUJAT.\n","center")
-    creditsText.insert(END, "\n","center")
-    creditsText.insert(END, "Textures :\n","center")
-    creditsText.insert(END, "Les texture de la map et des clés ont été réalisées par\n Gabriel CADEAU-FLAUJAT.\n","center")
-    creditsText.insert(END, "Certaines textures, libres de droits vienent du site de ressources 'OpenGameArt'.\n","center")
-    creditsText.insert(END, "\n","center")
-    creditsText.insert(END, "Remerciements :\n","center")
-    creditsText.insert(END, "Un grand merci à Cédric ESCOUTE, professeur de NSI, sans qui le projet n'aurait pas pu voir le jour.\n","center")
-    creditsText.insert(END, "Merci à Quentin PLADEAU, qui a aidé sur l'aspect programmation du projet.\n","center")
-    creditsText.insert(END, "\n","center")
-    creditsText.insert(END, "Informations supplémentaires :\n","center")
-    creditsText.insert(END, "'Memory Game' est un jeu programmé entièremment dans le language de programmation Python.\n","center")
-    creditsText.insert(END, "L'aspect graphique du jeu a été assuré par al librairie Tkinter, native à Python\n","center")
-    creditsText.insert(END, "\n","center")
-    creditsText.insert(END, "'Memory Game' est un jeu soumis aux droits d'auteurs et est soumis à la propriété intellectuelle de\n","center")
-    creditsText.insert(END, "Thomas KELEMEN et Gabriel CADEAU-FLAUJAT\n","center")
-    creditsText.insert(END, "Ce jeu est destiné à un usage personnel et non commercial. Vous pouvez le partager avec des amis et des proches, mais toute distribution à des fins commerciales est strictement interdite sans autorisation préalable.\n","center")
-    creditsText.insert(END, "En utilisant ce jeu, vous acceptez de vous conformer à toutes les lois et réglementations en vigueur en France concernant les droits d'auteur, la propriété intellectuelle et toute autre loi applicable.\n \n","center")
-
+    creditsText.insert(END, "Le jeu 'Memory Game' a été réalisé par\nThomas KELEMEN & Gabriel CADEAU-FLAUJAT,\ndeux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\nLe jeu 'Memory Game' a été inspiré de la plateforme de jeu 'Human Benchmark'.\n\n Développement :\n'Memory Game' a été développé entierement par Thomas KELEMEN et Gabriel CADEAU-FLAUJAT.\n\nTextures :\nLes texture de la map et des clés ont été réalisées par\n Gabriel CADEAU-FLAUJAT.\nCertaines textures, libres de droits vienent du site de ressources 'OpenGameArt'.\n\nRemerciements :\nUn grand merci à Cédric ESCOUTE, professeur de NSI, sans qui le projet n'aurait pas pu voir le jour.\nMerci à Quentin PLADEAU, qui a aidé sur l'aspect programmation du projet.\n\nInformations supplémentaires :\n'Memory Game' est un jeu programmé entièremment dans le language de programmation Python.\nL'aspect graphique du jeu a été assuré par al librairie Tkinter, native à Python\n\n'Memory Game' est un jeu soumis aux droits d'auteurs et est soumis à la propriété intellectuelle de\nThomas KELEMEN et Gabriel CADEAU-FLAUJAT\nCe jeu est destiné à un usage personnel et non commercial. Vous pouvez le partager avec des amis et des proches, mais toute distribution à des fins commerciales est strictement interdite sans autorisation préalable.\nEn utilisant ce jeu, vous acceptez de vous conformer à toutes les lois et réglementations en vigueur en France concernant les droits d'auteur, la propriété intellectuelle et toute autre loi applicable.\n \n","center")
     creditsText.config(state=DISABLED)
-
     creditsQuitButton = Button(creditsText, text="OK", command=credits_quit, background="aquamarine1")
 
+    #Fonction qui fait défiler les éléments de creditsText
     def check_scroll(*args):
       creditsText.update_idletasks()
       # Obtenir la position actuelle de la scrollbar
@@ -802,12 +803,15 @@ def startGame():
 
     creditsText.config(yscrollcommand=lambda *args: (scrollbarCredits.set(*args), check_scroll(*args)))
 
+    #On lance la fenêtre des crédits
     credits.mainloop()
 
-
+  #Fonction qui affiche les règles du jeu dans une nouvelel fenêtre 
   def regles():
+    #Fonction qui ferme la fenêtre des règles du jeu
     def regles_quit():
       regles.destroy()
+    #On crée la fenêtre ainsi que les différents éléments des règles du jeu
     regles = Tk()
     regles.title("Règles | Memory Game")
     regles.geometry("400x300")
@@ -852,9 +856,9 @@ def startGame():
     reglesText.insert(END, "\n \n","center")
     
     reglesText.config(state=DISABLED)
-
     reglesQuitButton = Button(reglesText, text="OK", command=regles_quit, background="aquamarine1")
 
+    #Fonction qui fait défiler les éléments de reglesText en même temps que la scrollbar
     def check_scroll(*args):
       reglesText.update_idletasks()
       # Obtenir la position actuelle de la scrollbar
@@ -871,12 +875,15 @@ def startGame():
 
     reglesText.config(yscrollcommand=lambda *args: (scrollbarRegles.set(*args), check_scroll(*args)))
 
+    #On lance la fenêtre des règles
     regles.mainloop()
 
+  #Fonction qui appelel la fonction script()
   def launcher():
     StartFenetre.destroy()
     script()
 
+  #On crée la fenêtre et les différents éléments du menu de démarrage du jeu
   StartFenetre = Tk()
   StartFenetre.title("Memory Game | Thomas & Gabriel")
   StartFenetre.geometry("750x350")
@@ -906,7 +913,7 @@ def startGame():
   ReglesBtn = Button(StartButtonsFrameTop, text="Règles", command=regles, font=("Arial", 10), background="aquamarine3")
   ReglesBtn.pack(side=RIGHT, pady=10, padx=25)
 
-
+  #On lance la fenêtre du menu de démarrage
   StartFenetre.mainloop()
 
 startGame()
