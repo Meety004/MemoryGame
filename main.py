@@ -29,6 +29,9 @@ MIXHighestScore = 0
 global coords
 coords = (400, 300)
 
+global difficulte
+difficulte = None
+
 #SCRIPT GENERAL
 def script():
 
@@ -68,25 +71,48 @@ def script():
       MVRestartMainFrame = Frame(MVRestartFrame, relief=GROOVE)
       MVRestartMainFrame.pack(side=TOP)
       score = mvscore.get()
-      #Si le joueur a gagné (au moins 50 points)
-      if score >= 50:
-        MVWinLab = Label(MVRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
-        MVWinLab.pack(side=TOP)
-        MVWinLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Vous obtenez la clé de la Mémoire Verbale !"), font=("Arial", 10))
-        MVWinLabSubLab.pack(side=TOP, pady=30)
-        cle_verbal_memory = PhotoImage(file="textures/cles/cle_verbal_memory.png")
-        CanvaCle = Canvas(MVRestartMainFrame, width=80, height=80)
-        CanvaCle.pack(side=TOP)
-        CanvaCle.create_image(0, 0, anchor=NW, image=cle_verbal_memory)
-        CanvaCle.image = cle_verbal_memory
+      if difficulte == True:
 
-      #Si le joueur a perdu (moins de 50 lignes)
+        #Si le joueur a gagné (au moins 50 points )
+        if score >= 50:
+          MVWinLab = Label(MVRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
+          MVWinLab.pack(side=TOP)
+          MVWinLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Vous obtenez la clé de la Mémoire Verbale !"), font=("Arial", 10))
+          MVWinLabSubLab.pack(side=TOP, pady=30)
+          cle_verbal_memory = PhotoImage(file="textures/cles/cle_verbal_memory.png")
+          CanvaCle = Canvas(MVRestartMainFrame, width=80, height=80)
+          CanvaCle.pack(side=TOP)
+          CanvaCle.create_image(0, 0, anchor=NW, image=cle_verbal_memory)
+          CanvaCle.image = cle_verbal_memory
+
+        #Si le joueur a perdu (moins de 50 points)
+        else:
+          MVLoseLab = Label(MVRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
+          MVLoseLab.pack(side=TOP)
+          diff = (5 - score)
+          MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
+          MVLoseLabSubLab.pack(side=TOP, pady=30)
       else:
-        MVLoseLab = Label(MVRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
-        MVLoseLab.pack(side=TOP)
-        diff = (50 - score)
-        MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
-        MVLoseLabSubLab.pack(side=TOP, pady=30)
+        #Si le joueur a gagné (au moins 25 points)
+        if score >= 25:
+          MVWinLab = Label(MVRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
+          MVWinLab.pack(side=TOP)
+          MVWinLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Vous obtenez la clé de la Mémoire Verbale !"), font=("Arial", 10))
+          MVWinLabSubLab.pack(side=TOP, pady=30)
+          cle_verbal_memory = PhotoImage(file="textures/cles/cle_verbal_memory.png")
+          CanvaCle = Canvas(MVRestartMainFrame, width=80, height=80)
+          CanvaCle.pack(side=TOP)
+          CanvaCle.create_image(0, 0, anchor=NW, image=cle_verbal_memory)
+          CanvaCle.image = cle_verbal_memory
+
+        #Si le joueur a perdu (moins de 25 points)
+        else:
+          MVLoseLab = Label(MVRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
+          MVLoseLab.pack(side=TOP)
+          diff = (25 - score)
+          MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
+          MVLoseLabSubLab.pack(side=TOP, pady=30)
+
       MVRestartButtons = Frame(MVRestartFrame, relief=GROOVE)
       MVRestartButtons.pack(side=TOP, pady=10)
       MVRestartButton = Button(MVRestartButtons, text="Recommencer", command=mvrestart, background="aquamarine1")
@@ -142,7 +168,6 @@ def script():
           score += 1
           mvscore.set(score)
           if score >= MVHighestScore:
-            print("hello")
             MVHighestScore = score
             mvHighestScore.set(score)
           MVcheckScore()
@@ -184,7 +209,6 @@ def script():
           score = mvscore.get()
           score += 1
           if score >= MVHighestScore:
-            print("hello")
             MVHighestScore = score
             mvHighestScore.set(score)
           mvscore.set(score)
@@ -209,7 +233,6 @@ def script():
         score = mvscore.get()
         score += 1
         if score >= MVHighestScore:
-          print("hello")
           MVHighestScore = score
           mvHighestScore.set(score)
         mvscore.set(score)
@@ -230,11 +253,18 @@ def script():
 
     #Fonction qui compare le score de mémoire verbale avec certaines valeurs (victoire et easter egg)
     def MVcheckScore():
-      if mvscore.get() == 50:
-        key_verbal_memory = True
-        verbal_memory_reussi()
-      if mvscore.get() == 75:
-        verbal_memory_hint()
+      if difficulte == True:
+        if mvscore.get() == 50:
+          key_verbal_memory = True
+          verbal_memory_reussi()
+        elif mvscore.get() == 75:
+          verbal_memory_hint()
+      else:
+        if mvscore.get() == 25:
+          key_verbal_memory = True
+          verbal_memory_reussi()
+        elif mvscore.get() == 50:
+          verbal_memory_hint() 
 
     #Fonction pour donner un indice sur un easter egg si le joueur atteint 75 points dans la mémoire verbale dans une nouvelel fenêtre
     def verbal_memory_hint():
@@ -248,7 +278,10 @@ def script():
       MVIndice.geometry("400x200")
       MVIndiceMainFrame = Frame(MVIndice, borderwidth=1, relief=GROOVE)
       MVIndiceMainFrame.pack(side=TOP)
-      MVIndiceText = Label(MVIndiceMainFrame, text="Bravo pour avoir atteint 75 points dans le jeu de mémoire verbale,\n voici un indice pour accéder a une salle secrète:")
+      if difficulte == True:
+        MVIndiceText = Label(MVIndiceMainFrame, text="Bravo pour avoir atteint 75 points dans le jeu de mémoire verbale,\n voici un indice pour accéder a une salle secrète:")
+      else:
+        MVIndiceText = Label(MVIndiceMainFrame, text="Bravo pour avoir atteint 50 points dans le jeu de mémoire verbale,\n voici un indice pour accéder a une salle secrète:") 
       MVIndiceText.pack(side=TOP, padx=5)
       MVIndiceIndice = Label(MVIndiceMainFrame, text="Code césar - partie 1")
       MVIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
@@ -335,6 +368,7 @@ def script():
     #On remet les coordonnées à zéro
     reset_coords()
     #On crée on liste vide qui contiendra les images qui sont déjà apparues
+    global SeenPics
     SeenPics = []
     #On crée les variables globales current_image et current_image_id qui vont contenir et afficher les images
     global current_image, current_image_id
@@ -365,24 +399,46 @@ def script():
       MIRestartMainFrame.pack(side=TOP)
       score = miscore.get()
       #Si le joueur a gagné la partie (au moins 50 points)
-      if score >= 50:
-        MIWinLab = Label(MIRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
-        MIWinLab.pack(side=TOP)
-        MIWinLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore} !\n Vous obtenez la clé de la Mémoire des Images !"), font=("Arial", 10))
-        MIWinLabSubLab.pack(side=TOP, pady=30)
-        cle_images_memory = PhotoImage(file="textures/cles/cle_images_memory.png")
-        CanvaCle = Canvas(MIRestartMainFrame, width=80, height=80)
-        CanvaCle.pack(side=TOP)
-        CanvaCle.create_image(0, 0, anchor=NW, image=cle_images_memory)
-        CanvaCle.image = cle_images_memory
+      if difficulte == True:
+        if score >= 50:
+          MIWinLab = Label(MIRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
+          MIWinLab.pack(side=TOP)
+          MIWinLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore} !\n Vous obtenez la clé de la Mémoire des Images !"), font=("Arial", 10))
+          MIWinLabSubLab.pack(side=TOP, pady=30)
+          cle_images_memory = PhotoImage(file="textures/cles/cle_images_memory.png")
+          CanvaCle = Canvas(MIRestartMainFrame, width=80, height=80)
+          CanvaCle.pack(side=TOP)
+          CanvaCle.create_image(0, 0, anchor=NW, image=cle_images_memory)
+          CanvaCle.image = cle_images_memory
 
-      #Si le joueur a perdu la partie (moins de 50 points)
+        #Si le joueur a perdu la partie (moins de 50 points)
+        else:
+          MILoseLab = Label(MIRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
+          MILoseLab.pack(side=TOP)
+          diff = (50 - score)
+          MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
+          MILoseLabSubLab.pack(side=TOP, pady=30)
+
+      #Si le joueur a gagné la partie (au moins 25 points)
       else:
-        MILoseLab = Label(MIRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
-        MILoseLab.pack(side=TOP)
-        diff = (50 - score)
-        MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
-        MILoseLabSubLab.pack(side=TOP, pady=30)
+        if score >= 25:
+          MIWinLab = Label(MIRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
+          MIWinLab.pack(side=TOP)
+          MIWinLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore} !\n Vous obtenez la clé de la Mémoire des Images !"), font=("Arial", 10))
+          MIWinLabSubLab.pack(side=TOP, pady=30)
+          cle_images_memory = PhotoImage(file="textures/cles/cle_images_memory.png")
+          CanvaCle = Canvas(MIRestartMainFrame, width=80, height=80)
+          CanvaCle.pack(side=TOP)
+          CanvaCle.create_image(0, 0, anchor=NW, image=cle_images_memory)
+          CanvaCle.image = cle_images_memory
+
+        #Si le joueur a perdu la partie (moins de 25 points)
+        else:
+          MILoseLab = Label(MIRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
+          MILoseLab.pack(side=TOP)
+          diff = (25 - score)
+          MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
+          MILoseLabSubLab.pack(side=TOP, pady=30)
       MIRestartButtons = Frame(MIRestartFrame, relief=GROOVE)
       MIRestartButtons.pack(side=TOP, pady=10)
       MIRestartButton = Button(MIRestartButtons, text="Recommencer", command=mirestart, background="aquamarine1")
@@ -423,23 +479,30 @@ def script():
 
     #Fonction pour choisir une image
     def choice_image():
-      global micoup
+      global micoup, SeenPics, current_image_indice
       randomizer = random.randint(0,11)
       if (randomizer <= 5):
-        current_image = random.choice(SeenPics)
+        indice = random.choice(SeenPics)
+        current_image = PhotoImage(file=image_chemin[indice])
+        current_path = image_chemin[indice]
+        for i in range(len(image_chemin)):
+          if image_chemin[i] == current_path:
+            current_image_indice = i
       else:
         current_path = random.choice(image_chemin)
+        for i in range(len(image_chemin)):
+          if image_chemin[i] == current_path:
+            current_image_indice = i
         current_image = PhotoImage(file=current_path)
       CanvaPic.delete("all")
       current_image_id = CanvaPic.create_image(0, 0, image=current_image, anchor=NW)
       CanvaPic.image = current_image
-      print(SeenPics)
 
     #Fonction si le joueur a cliqué sur le bouton déjà vu
     def micheck_dejavu ():
-      global mivies, micoup, MIHighestScore
+      global mivies, micoup, MIHighestScore, SeenPics, current_image_indice
       if micoup > 0:
-        if current_image in SeenPics:
+        if current_image_indice in SeenPics:
           score = miscore.get()
           score += 1
           miscore.set(score)
@@ -448,7 +511,7 @@ def script():
             miHighestScore.set(score)
           MIcheckScore()
         else:
-          SeenPics.append(current_image)
+          SeenPics.append(current_image_indice)
           mivies -= 1
           MIcheck_vie()
         choice_image()
@@ -460,9 +523,9 @@ def script():
 
     #Fonction si le joueur a cliqué sur nouvelle image
     def check_nouvelle_image ():
-      global micoup, mivies, MIHighestScore
+      global micoup, mivies, MIHighestScore, SeenPics, current_image_indice
       if micoup > 0:
-        if current_image in SeenPics:
+        if current_image_indice in SeenPics:
           mivies -= 1
           MIcheck_vie()
         else:
@@ -472,7 +535,7 @@ def script():
             MIHighestScore = score
             miHighestScore.set(score)
           MIcheckScore()
-          SeenPics.append(current_image)
+          SeenPics.append(current_image_indice)
         choice_image()
       else:
           score = miscore.get()
@@ -483,7 +546,7 @@ def script():
             miHighestScore.set(score)
           MIcheckScore()
           micoup += 1
-          SeenPics.append(current_image)
+          SeenPics.append(current_image_indice)
           choice_image()  
 
     #Affiches les règles de la mémoire des images dans une nouvellle fenêtre
@@ -504,11 +567,19 @@ def script():
 
     #Fonction qui s'active si on a 50 ou 75 points
     def MIcheckScore():
-      if miscore.get() == 50:
-        key_images_memory = True
-        images_memory_reussi()
-      if miscore.get() == 75:
-        images_memory_hint()
+      if difficulte == True:
+        if miscore.get() == 50:
+          key_images_memory = True
+          images_memory_reussi()
+        elif miscore.get() == 75:
+          images_memory_hint()
+      else:
+        if miscore.get() == 25:
+          key_images_memory = True
+          images_memory_reussi()
+        elif miscore.get() == 50:
+          images_memory_hint()
+
 
     #Fonction qui donne un indice un easter egg si on a 75 points dans une nouvelle fenêtre
     def images_memory_hint():
@@ -521,7 +592,11 @@ def script():
       MIndice.geometry("400x200")
       MIIndiceMainFrame = Frame(MIndice, borderwidth=1, relief=GROOVE)
       MIIndiceMainFrame.pack(side=TOP)
-      MIIndiceText = Label(MIIndiceMainFrame, text="Bravo pour avoir atteint 75 points dans le jeu de mémoire des images,\n voici un indice pour accéder a une salle secrète:")
+      if difficulte == True:
+        MIIndiceText = Label(MIIndiceMainFrame, text="Bravo pour avoir atteint 75 points dans le jeu de mémoire des images,\n voici un indice pour accéder a une salle secrète:")
+      else:
+        MIIndiceText = Label(MIIndiceMainFrame, text="Bravo pour avoir atteint 50 points dans le jeu de mémoire des images,\n voici un indice pour accéder a une salle secrète:")
+      
       MIIndiceText.pack(side=TOP, padx=5)
       MIIndiceIndice = Label(MIIndiceMainFrame, text="Code césar - partie 2")
       MIIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
@@ -563,6 +638,11 @@ def script():
 
     #On défini le chemin de l'image actuel comme un élément aléatoire de al liste des chemins
     current_path = random.choice(image_chemin)
+    for i in range(len(image_chemin)):
+      if image_chemin[i] == current_path:
+        global current_image_indice
+        current_image_indice = i
+
 
     #On charge l'image qui a pour chemin current_path
     current_image = PhotoImage(file=current_path)
@@ -601,7 +681,7 @@ def script():
     dejavuBTN = Button(FrameJeu, text="Déjà Vu", command=micheck_dejavu, background="azure", font=("Arial", 10))
     nouvelleimageBTN = Button(FrameJeu, text="Nouvelle Image", command=check_nouvelle_image, background="azure", font=("Arial",10))
 
-    FrameVie = Frame(MIFrame, relief=GROOVE)
+    FrameVie = Frame(MIFrame, relief=GROOVE, borderwidth=1)
     FrameVie.pack(side=TOP, pady=25)
     ThreeHearts = PhotoImage(file="textures/vie/3hearts.png")
     TwoHearts = PhotoImage(file="textures/vie/2hearts.png")
@@ -655,32 +735,62 @@ def script():
       ErrorLabel.pack(padx=10)
       ErrorMessagesFrame = Frame(Error, borderwidth=1, relief=GROOVE)
 
-      ErrorFrameMV = Frame(ErrorMessagesFrame, relief=GROOVE)
-      ErrorMVLabel1 = Label(ErrorFrameMV, text="Objectif à compléter pour obtenir la clé de mémoire verbale: (")
-      ErrorMVLabel1.pack(side=LEFT)
-      ErrorMVLabel2 = Label(ErrorFrameMV, textvariable=IntMVHighestScore)
-      ErrorMVLabel2.pack(side=LEFT)
-      ErrorMVLabel3 = Label(ErrorFrameMV, text="/ 50 )")
-      ErrorMVLabel3.pack(side=LEFT)
-      ErrorFrameMV.pack(side=TOP)
+      if difficulte == True:
 
-      ErrorFrameMI = Frame(ErrorMessagesFrame, relief=GROOVE)
-      ErrorMILabel1 = Label(ErrorFrameMI, text="Objectif à compléter pour obtenir la clé de mémoire des images: (")
-      ErrorMILabel1.pack(side=LEFT)
-      ErrorMILabel2 = Label(ErrorFrameMI, textvariable=IntMIHighestScore)
-      ErrorMILabel2.pack(side=LEFT)
-      ErrorMILabel3 = Label(ErrorFrameMI, text="/ 50 )")
-      ErrorMILabel3.pack(side=LEFT)
-      ErrorFrameMI.pack(side=TOP)
+        ErrorFrameMV = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMVLabel1 = Label(ErrorFrameMV, text="Objectif à compléter pour obtenir la clé de mémoire verbale: (")
+        ErrorMVLabel1.pack(side=LEFT)
+        ErrorMVLabel2 = Label(ErrorFrameMV, textvariable=IntMVHighestScore)
+        ErrorMVLabel2.pack(side=LEFT)
+        ErrorMVLabel3 = Label(ErrorFrameMV, text="/ 50 )")
+        ErrorMVLabel3.pack(side=LEFT)
+        ErrorFrameMV.pack(side=TOP)
 
-      ErrorFrameMP = Frame(ErrorMessagesFrame, relief=GROOVE)
-      ErrorMPLabel1 = Label(ErrorFrameMP, text="Objectif à compléter pour obtenir la clé de mémoire des patterns: (")
-      ErrorMPLabel1.pack(side=LEFT)
-      ErrorMPLabel2 = Label(ErrorFrameMP, textvariable=IntMPHighestScore)
-      ErrorMPLabel2.pack(side=LEFT)
-      ErrorMPLabel3 = Label(ErrorFrameMP, text="/ 15 )")
-      ErrorMPLabel3.pack(side=LEFT)
-      ErrorFrameMP.pack(side=TOP)
+        ErrorFrameMI = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMILabel1 = Label(ErrorFrameMI, text="Objectif à compléter pour obtenir la clé de mémoire des images: (")
+        ErrorMILabel1.pack(side=LEFT)
+        ErrorMILabel2 = Label(ErrorFrameMI, textvariable=IntMIHighestScore)
+        ErrorMILabel2.pack(side=LEFT)
+        ErrorMILabel3 = Label(ErrorFrameMI, text="/ 50 )")
+        ErrorMILabel3.pack(side=LEFT)
+        ErrorFrameMI.pack(side=TOP)
+
+        ErrorFrameMP = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMPLabel1 = Label(ErrorFrameMP, text="Objectif à compléter pour obtenir la clé de mémoire des patterns: (")
+        ErrorMPLabel1.pack(side=LEFT)
+        ErrorMPLabel2 = Label(ErrorFrameMP, textvariable=IntMPHighestScore)
+        ErrorMPLabel2.pack(side=LEFT)
+        ErrorMPLabel3 = Label(ErrorFrameMP, text="/ 15 )")
+        ErrorMPLabel3.pack(side=LEFT)
+        ErrorFrameMP.pack(side=TOP)
+
+      else:
+        ErrorFrameMV = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMVLabel1 = Label(ErrorFrameMV, text="Objectif à compléter pour obtenir la clé de mémoire verbale: (")
+        ErrorMVLabel1.pack(side=LEFT)
+        ErrorMVLabel2 = Label(ErrorFrameMV, textvariable=IntMVHighestScore)
+        ErrorMVLabel2.pack(side=LEFT)
+        ErrorMVLabel3 = Label(ErrorFrameMV, text="/ 25 )")
+        ErrorMVLabel3.pack(side=LEFT)
+        ErrorFrameMV.pack(side=TOP)
+
+        ErrorFrameMI = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMILabel1 = Label(ErrorFrameMI, text="Objectif à compléter pour obtenir la clé de mémoire des images: (")
+        ErrorMILabel1.pack(side=LEFT)
+        ErrorMILabel2 = Label(ErrorFrameMI, textvariable=IntMIHighestScore)
+        ErrorMILabel2.pack(side=LEFT)
+        ErrorMILabel3 = Label(ErrorFrameMI, text="/ 25 )")
+        ErrorMILabel3.pack(side=LEFT)
+        ErrorFrameMI.pack(side=TOP)
+
+        ErrorFrameMP = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMPLabel1 = Label(ErrorFrameMP, text="Objectif à compléter pour obtenir la clé de mémoire des patterns: (")
+        ErrorMPLabel1.pack(side=LEFT)
+        ErrorMPLabel2 = Label(ErrorFrameMP, textvariable=IntMPHighestScore)
+        ErrorMPLabel2.pack(side=LEFT)
+        ErrorMPLabel3 = Label(ErrorFrameMP, text="/ 10 )")
+        ErrorMPLabel3.pack(side=LEFT)
+        ErrorFrameMP.pack(side=TOP)
 
       ErrorMessagesFrame.pack(pady=15)
       ErrorQuitButton = Button(Error, text="OK", command=error_quit, background="aquamarine1")
@@ -777,7 +887,7 @@ def startGame():
     creditsTextFrame = Frame(credits, relief=GROOVE)
     creditsTextFrame.pack(fill=BOTH, expand=True)
     creditsText = Text(creditsTextFrame,   font=("Arial", 10), wrap=WORD)
-    creditsText.pack(side=LEFT, fill=BOTH, expand=True)
+    creditsText.pack(side=LEFT, fill=BOTH, expand=True, pady=10, padx=5)
     scrollbarCredits = Scrollbar(creditsTextFrame, orient=VERTICAL, command=creditsText.yview)
     scrollbarCredits.pack(side=RIGHT, fill=Y)
     
@@ -795,11 +905,11 @@ def startGame():
       if position[1] == 1.0:
           # Insérer le bouton si ce n'est pas déjà fait
           if not creditsQuitButton.winfo_ismapped():
-              creditsText.window_create(END, window=creditsQuitButton, padx=185)
+              creditsQuitButton.pack(side=BOTTOM, anchor=S, pady=5)
       else:
           # Supprimer le bouton si la scrollbar n'est pas tout en bas
           if creditsQuitButton.winfo_ismapped():
-              creditsQuitButton.place_forget()
+              creditsQuitButton.pack_forget()
 
     creditsText.config(yscrollcommand=lambda *args: (scrollbarCredits.set(*args), check_scroll(*args)))
 
@@ -822,7 +932,7 @@ def startGame():
     reglesTextFrame = Frame(regles, relief=GROOVE)
     reglesTextFrame.pack(fill=BOTH, expand=True)
     reglesText = Text(reglesTextFrame,   font=("Arial", 10), wrap=WORD)
-    reglesText.pack(side=LEFT, fill=BOTH, expand=True)
+    reglesText.pack(side=LEFT, fill=BOTH, expand=True, pady=10, padx=5)
     scrollbarRegles = Scrollbar(reglesTextFrame, orient=VERTICAL, command=reglesText.yview)
     scrollbarRegles.pack(side=RIGHT, fill=Y)
     
@@ -867,7 +977,7 @@ def startGame():
       if position[1] == 1.0:
           # Insérer le bouton si ce n'est pas déjà fait
           if not reglesQuitButton.winfo_ismapped():
-             reglesText.window_create(END, window=reglesQuitButton, padx=185)
+             reglesQuitButton.pack(side=BOTTOM, anchor=N, pady=10)
       else:
           # Supprimer le bouton si la scrollbar n'est pas tout en bas
           if reglesQuitButton.winfo_ismapped():
@@ -883,10 +993,40 @@ def startGame():
     StartFenetre.destroy()
     script()
 
+  #Fonction qui définit la difficulté sur facile
+  def easyMode():
+    global difficulte
+    EasyBtn.destroy()
+    HardBtn.destroy()
+    DifficultyLab.destroy()
+    difficulte = False
+    StartBtn.pack()
+    ChangeDifficultyBtn.pack(side=BOTTOM, anchor=CENTER, pady=10)
+
+  #Fonction qui définit la difficulté sur difficile
+  def hardMode():
+    global difficulte
+    EasyBtn.destroy()
+    HardBtn.destroy()
+    DifficultyLab.destroy()
+    difficulte = True
+    StartBtn.pack()
+    ChangeDifficultyBtn.pack(side=BOTTOM, anchor=CENTER, pady=10)
+
+  #Fonction qui permet de gérer le changement de difficulté
+  def changeDifficulty():
+    global difficulte
+    StartFenetre.destroy()
+    startGame()
+    difficulte = None
+
+
+
+
   #On crée la fenêtre et les différents éléments du menu de démarrage du jeu
   StartFenetre = Tk()
   StartFenetre.title("Memory Game | Thomas & Gabriel")
-  StartFenetre.geometry("750x350")
+  StartFenetre.geometry("750x400")
 
   StartTitleFrame = Frame(StartFenetre, borderwidth=1, relief=GROOVE)
   StartTitleFrame.pack(side=TOP,padx=10, pady=10)
@@ -905,7 +1045,15 @@ def startGame():
   StartButtonsFrameBottom.pack(side=BOTTOM, padx=5, pady=5)
 
   StartBtn = Button(StartButtonsFrameBottom, text="COMMENCER", font=("Arial", 10), command=launcher, background="aquamarine1")
-  StartBtn.pack()
+  ChangeDifficultyBtn = Button(StartButtonsFrameBottom, text="Changer de difficulté", font=("Arial", 10), background="aquamarine1", command=changeDifficulty)
+
+  DifficultyLab = Label(StartButtonsFrameBottom, text="Choisissez la difficulté du jeu.", font=("Arial", 15))
+  DifficultyLab.pack(side=TOP, anchor=CENTER)
+  EasyBtn = Button(StartButtonsFrameBottom, text="FACILE", font=("Arial", 10), command=easyMode, background="green1")
+  HardBtn = Button(StartButtonsFrameBottom, text="DIFFICILE", font=("Arial", 10), command=hardMode, background="red1")
+  EasyBtn.pack(side=TOP, pady=10)
+  HardBtn.pack(side=TOP, pady=10)
+
 
   CreditsBtn = Button(StartButtonsFrameTop, text="Crédits", command=credits, font=("Arial", 10), background="aquamarine3")
   CreditsBtn.pack(side=LEFT, pady=10, padx=25)
