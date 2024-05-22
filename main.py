@@ -633,8 +633,8 @@ def script():
     image_chemin = []
 
     #On met dans une liste le chemin de toutes les images de la mémoire des images
-    for i in range(3):
-      image_chemin.append(f"ressources/images/image_{i}.png")
+    for i in range(150):
+      image_chemin.append(f"ressources/images/image_{i}.jpg")
 
     #On défini le chemin de l'image actuel comme un élément aléatoire de al liste des chemins
     current_path = random.choice(image_chemin)
