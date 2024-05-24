@@ -633,8 +633,8 @@ def script():
     image_chemin = []
 
     #On met dans une liste le chemin de toutes les images de la mémoire des images
-    for i in range(150):
-      image_chemin.append(f"ressources/images/image_{i}.jpg")
+    for i in range(1):
+      image_chemin.append(f"ressources/ntm/image_{i}.png")
 
     #On défini le chemin de l'image actuel comme un élément aléatoire de al liste des chemins
     current_path = random.choice(image_chemin)
@@ -809,15 +809,19 @@ def script():
     #Si la touche est la flèche du haut et que le sprite n'a pas déjà atteint le mur du haut, on monte de 20 pixels
     if touche == "Up" and coords[1] > 40:
         coords = (coords[0], coords[1] - 20)
+        canva_tableau.coords(rectangle, coords[0], coords[1])
     #Si la touche est la flèche du bas et que le sprite n'a pas déjà atteint le mur du bas, on descend de 20 pixels
     elif touche == "Down" and coords[1] < 540:
         coords = (coords[0], coords[1] + 20)
+        canva_tableau.coords(rectangle, coords[0], coords[1])
     #Si la touche est la flèche de droite et que le sprite n'a pas déjà atteint le mur de droite, on se déplace de 20 pixels à droite
     elif touche == "Right" and coords[0] < 740:
         coords = (coords[0] + 20, coords[1])
+        canva_tableau.coords(rectangle, coords[0], coords[1])
     #Si la touche est la flèche de gauche et que le sprite n'a pas déjà atteint le mur de gauche, on se déplace de 20 pixels à gauche
     elif touche == "Left" and coords[0] > 40:
         coords = (coords[0] - 20, coords[1])
+        canva_tableau.coords(rectangle, coords[0], coords[1])
     #Si le touche est "e", et que les coordonnées du sprite correspondent aux coordonnées des portes,
     #On appelle les différentes fonctions des jeux de mémoires et on remet les coordonnées à 0
 
@@ -837,10 +841,71 @@ def script():
         elif (coords[0] == 400 and coords[1] == 40) or (coords[0] == 380 and coords[1] == 40):
             coords = (400, 300)
             mix_start()
-    #Si la touche est différente de "e", on met à jour les coordonnées du rectangle
-    if touche != "e":
-        canva_tableau.coords(rectangle, coords[0], coords[1])
+    elif (touche == "a") and (coords[0] == 740) and (coords[1] == 40):
+      coords = (400,300)
+      mainFrame.destroy()
+      easter_egg()
 
+  def easter_egg():
+    print("a")
+
+    def deplacementEaster(event):
+      global easterCoords
+
+      touche = event.keysym
+
+        #Si la touche est la flèche du haut et que le sprite n'a pas déjà atteint le mur du haut, on monte de 20 pixels
+      if touche == "Up" and easterCoords[1] > 40:
+        easterCoords = (easterCoords[0], easterCoords[1] - 20)
+        grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+      #Si la touche est la flèche du bas et que le sprite n'a pas déjà atteint le mur du bas, on descend de 20 pixels
+      elif touche == "Down" and easterCoords[1] < 540:
+        easterCoords = (easterCoords[0], easterCoords[1] + 20)
+        grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+      #Si la touche est la flèche de droite et que le sprite n'a pas déjà atteint le mur de droite, on se déplace de 20 pixels à droite
+      elif touche == "Right" and easterCoords[0] < 740:
+        easterCoords = (easterCoords[0] + 20, easterCoords[1])
+        grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+      #Si la touche est la flèche de gauche et que le sprite n'a pas déjà atteint le mur de gauche, on se déplace de 20 pixels à gauche
+      elif touche == "Left" and easterCoords[0] > 40:
+        easterCoords = (easterCoords[0] - 20, easterCoords[1])
+        grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+      elif touche == "e":
+        if (easterCoords[0] == 400 and easterCoords[1] == 40) or (easterCoords[0] == 380 and easterCoords[1] == 40):
+          easterFrame.destroy()
+          script()
+      
+    #TKINTER SALLE EASTER EGGS#
+    
+    global easterCoords
+    easterCoords = (400,300)
+
+    #On crée la fenêtre principale
+    easterFrame = Tk()
+    easterFrame.title("Easter Egg | Memory Game")
+    easterFrame.geometry("800x600")
+
+    #On crée un tableau dans lequel le sprite se déplace
+    grid_easter = Canvas(easterFrame, width=800, height=600)
+
+    #On charge et importe les textures de la map
+    MapPixelArtEaster = PhotoImage(file="textures/map_easter.png")
+    grid_easter.create_image(0, 0, anchor=NW, image=MapPixelArtEaster)
+
+    #On charge et importe les textures du sprite
+    sprite = PhotoImage(file="textures/sprite.png")
+    rectangleEaster = grid_easter.create_image(400, 300, image=sprite, anchor=NW)
+
+    #On ajoute un écouteur d'évènement sur les touches du clavier, activant la fonction deplacement
+    grid_easter.focus_set()
+    grid_easter.bind("<Key>", deplacementEaster)
+
+    grid_easter.pack()
+
+
+
+    #On ouvre la fenêtre d'easter eggs
+    easterFrame.mainloop()
 
   #TKINTER SALLE PRINCIPALE#
 
@@ -977,11 +1042,11 @@ def startGame():
       if position[1] == 1.0:
           # Insérer le bouton si ce n'est pas déjà fait
           if not reglesQuitButton.winfo_ismapped():
-             reglesQuitButton.pack(side=BOTTOM, anchor=N, pady=10)
+             reglesQuitButton.pack(side=BOTTOM, anchor=S, pady=10)
       else:
           # Supprimer le bouton si la scrollbar n'est pas tout en bas
           if reglesQuitButton.winfo_ismapped():
-              reglesQuitButton.place_forget()
+              reglesQuitButton.pack_forget()
 
     reglesText.config(yscrollcommand=lambda *args: (scrollbarRegles.set(*args), check_scroll(*args)))
 
