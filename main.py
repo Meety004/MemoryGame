@@ -1105,28 +1105,55 @@ def script():
     def deplacementEaster(event):
       global easterCoords
 
+      linkCoords = [
+        (100, 120),
+        (120, 120),
+        (140, 120),
+        (160, 120),
+        (100, 140),
+        (120, 140),
+        (140, 140),
+        (160, 140),
+        (100, 160),
+        (120, 160),
+        (140, 160),
+        (160, 160),
+        (100, 180),
+        (120, 180),
+        (140, 180),
+        (160, 180)
+      ]
+
       touche = event.keysym
 
         #Si la touche est la flèche du haut et que le sprite n'a pas déjà atteint le mur du haut, on monte de 20 pixels
       if touche == "Up" and easterCoords[1] > 40:
         easterCoords = (easterCoords[0], easterCoords[1] - 20)
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        print(easterCoords)
       #Si la touche est la flèche du bas et que le sprite n'a pas déjà atteint le mur du bas, on descend de 20 pixels
       elif touche == "Down" and easterCoords[1] < 540:
         easterCoords = (easterCoords[0], easterCoords[1] + 20)
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        print(easterCoords)
       #Si la touche est la flèche de droite et que le sprite n'a pas déjà atteint le mur de droite, on se déplace de 20 pixels à droite
       elif touche == "Right" and easterCoords[0] < 740:
         easterCoords = (easterCoords[0] + 20, easterCoords[1])
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        print(easterCoords)
       #Si la touche est la flèche de gauche et que le sprite n'a pas déjà atteint le mur de gauche, on se déplace de 20 pixels à gauche
       elif touche == "Left" and easterCoords[0] > 40:
         easterCoords = (easterCoords[0] - 20, easterCoords[1])
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        print(easterCoords)
       elif touche == "e":
         if (easterCoords[0] == 400 and easterCoords[1] == 40) or (easterCoords[0] == 380 and easterCoords[1] == 40):
           easterFrame.destroy()
           script()
+        elif (easterCoords in linkCoords):
+          print("ça marche")
+          
+        
       
     #TKINTER SALLE EASTER EGGS#
     
@@ -1142,7 +1169,7 @@ def script():
     grid_easter = Canvas(easterFrame, width=800, height=600)
 
     #On charge et importe les textures de la map
-    MapPixelArtEaster = PhotoImage(file="textures/map_easter.png")
+    MapPixelArtEaster = PhotoImage(file="textures/map_easter_gaster.png")
     grid_easter.create_image(0, 0, anchor=NW, image=MapPixelArtEaster)
 
     #On charge et importe les textures du sprite
