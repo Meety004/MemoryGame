@@ -324,7 +324,7 @@ def script():
     MVFrame.geometry("600x500")
 
     #On crée les différents éléments de la fenêtre
-    FrameInfos = Frame(MVFrame, borderwidth=1, relief=GROOVE)
+    FrameInfos = Frame(MVFrame, relief=GROOVE)
     FrameInfos.pack(side=TOP, padx=5)
     MemoireVerbaleLabel = Label(FrameInfos, text="Mémoire Verbale", font=("Arial",30))
     MemoireVerbaleLabel.pack(padx=5, pady=5)
@@ -362,6 +362,9 @@ def script():
     CanvaVie3 = Canvas(FrameVie, width=ThreeHearts.width(), height=ThreeHearts.height())
     CanvaVie3.create_image(0, 0, anchor=NW, image=ThreeHearts)
     CanvaVie3.pack(side=BOTTOM)
+
+    LicenseLabel = Label(MVFrame, text="Memory Game, Thomas KELEMEN & Gabriel CADEAU-FLAUJAT \n © Tous droits réservés. 2024 ")
+    LicenseLabel.pack(side=BOTTOM)
 
     #On donne la valeur du meilleur score de mémoire verbale à la variable tKinter de même nom
     mvHighestScore.set(MVHighestScore)
@@ -664,7 +667,7 @@ def script():
     MIFrame.geometry("600x500")
 
     #On crée les différents éléments Tkinter de la mémoire des images
-    FrameInfos = Frame(MIFrame, borderwidth=1, relief=GROOVE)
+    FrameInfos = Frame(MIFrame, relief=GROOVE)
     FrameInfos.pack(side=TOP, padx=5)
     MemoireImagesLabel = Label(FrameInfos, text="Mémoire des Images", font=("Arial",30))
     MemoireImagesLabel.pack(padx=5, pady=5)
@@ -701,6 +704,10 @@ def script():
     CanvaVie3 = Canvas(FrameVie, width=ThreeHearts.width(), height=ThreeHearts.height())
     CanvaVie3.create_image(0, 0, anchor=NW, image=ThreeHearts)
     CanvaVie3.pack(side=BOTTOM)
+
+    LicenseLabel = Label(MIFrame, text="Memory Game, Thomas KELEMEN & Gabriel CADEAU-FLAUJAT \n © Tous droits réservés. 2024 ")
+    LicenseLabel.pack(side=BOTTOM)
+    
 
     #On donne la valeur du meilleur score de mémoire des images à la variable tKinter de même nom
     miHighestScore.set(MIHighestScore)
@@ -913,7 +920,7 @@ def script():
     MNFrame.geometry("700x350")
 
     #création des éléments
-    FrameInfos = Frame(MNFrame, borderwidth=1, relief=GROOVE)
+    FrameInfos = Frame(MNFrame, relief=GROOVE)
     FrameInfos.pack(side=TOP, padx=5)
     MemoireNombreLabel = Label(FrameInfos, text="Mémoire des Nombres", font=("Arial",30))
     MemoireNombreLabel.pack(padx=5, pady=5)
@@ -940,6 +947,9 @@ def script():
     MNentry = Entry(MNFrame, textvariable=mntexte, width=15)
     MNcontinuerBTN = Button(MNFrame, text="Continuer" ,command=continuer, background="azure", font=("Arial", 10))
 
+    LicenseLabel = Label(MNFrame, text="Memory Game, Thomas KELEMEN & Gabriel CADEAU-FLAUJAT \n © Tous droits réservés. 2024 ")
+    LicenseLabel.pack(side=BOTTOM)
+    
     #On donne la valeur du meilleur score de la mémoire des nb
     mnHighestScore.set(MNHighestScore)
 
@@ -1246,32 +1256,7 @@ def startGame():
     
     reglesText.tag_configure("center", justify='center')
 
-    reglesText.insert(END, "Le jeu 'Memory Game' a été réalisé par\n","center")
-    reglesText.insert(END, "Thomas KELEMEN & Gabriel CADEAU-FLAUJAT,\n","center")
-    reglesText.insert(END, "deux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\n","center")
-    reglesText.insert(END, "\n","center")
-    reglesText.insert(END, "Règles générales :\n","center")
-    reglesText.insert(END, "'Memory Game' est un jeu composé de quatre salles, chacune d'elle représentant une épreuve.\n","center")
-    reglesText.insert(END, "Ces épreuves sont:\n -La Mémoire Verbale (à gauche)\n -La Mémoire des Images (en bas)\n -La Mémoire des Nombres (à droite)\n -La Mémoire des Patterns (en haut)","center")
-    reglesText.insert(END, "Les règles de chacune de ses épreuves sont disponibles quand vous y accédez.\n","center")
-    reglesText.insert(END, "\n","center")
-    reglesText.insert(END, "Salle Principale :\n","center")
-    reglesText.insert(END, "La salle principale est une salle libre dans laquelle vosu pouvez vous déplacer pour accéder aux différentes épreuves.\n","center")
-    reglesText.insert(END, "Chacune des portes correspond à une épreuve différente.\n","center")
-    reglesText.insert(END, "\n","center")
-    reglesText.insert(END, "Contrôles :\n","center")
-    reglesText.insert(END, "Afin de vous déplacer dans la salle principale, utilisez les flèches de votre clavier.\n","center")
-    reglesText.insert(END, "Pour entrer dans les différentes salles, utilisez la touche 'e'.\n","center")
-    reglesText.insert(END, "Dans les salles d'épreuves, utilisez la souris pour vous déplacer et le clique gauche pour intéragir avec les différents éléments\n","center")
-    reglesText.insert(END, "\n","center")
-    reglesText.insert(END, "Easter Egg :\n","center")
-    reglesText.insert(END, "Des Easter Eggs sont dissimulés dans le jeu, soyez attentifs pour essayer de tous les trouver.\n","center")
-    reglesText.insert(END, "Note: Vous pouvez utiliser les différents fichiers Python mis à votre disposition\n","center")
-    reglesText.insert(END, "\n","center")
-    reglesText.insert(END, "Accès à la salle MP:\n","center")
-    reglesText.insert(END, "Afin d'accéder à la salle finale du jeu, vous aurez besoin d'obtenir un certain score dans les trois autres épreuves:\n","center")
-    reglesText.insert(END, "-Mémoire Verbale: 50/25 Points\n -Mémoire des Images: 50/25 Points\n -Mémoire des Nombres: 10/7 Points \n","center")
-    reglesText.insert(END, "\n \n","center")
+    reglesText.insert(END, "Le jeu 'Memory Game' a été réalisé par\nThomas KELEMEN & Gabriel CADEAU-FLAUJAT,\ndeux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\n\nRègles générales :\n'Memory Game' est un jeu composé de quatre salles, chacune d'elle représentant une épreuve.\n\nCes épreuves sont :\n -La Mémoire Verbale (à gauche)\n -La Mémoire des Images (en bas)\n -La Mémoire des Nombres (à droite)\n -La Mémoire des Patterns (en haut).\nLes règles de chacune de ses épreuves sont disponibles quand vous y accédez.\n\nSalle Principale :\nLa salle principale est une salle libre dans laquelle vous pouvez vous déplacer pour accéder aux différentes épreuves.\nChacune des portes correspond à une épreuve différente.\n\nContrôles :\nAfin de vous déplacer dans la salle principale, utilisez les flèches de votre clavier.\nPour entrer dans les différentes salles, utilisez la touche 'e'.\nDans les salles d'épreuves, utilisez la souris pour vous déplacer et le clique gauche pour intéragir avec les différents éléments\n\nEaster Egg :\nDes Easter Eggs sont dissimulés dans le jeu, soyez attentifs pour essayer de tous les trouver.\nNote: Vous pouvez utiliser les différents fichiers Python mis à votre disposition\n\nAccès à la salle de Mémoire des Patterns:\nAfin d'accéder à la salle finale du jeu, vous aurez besoin d'obtenir un certain score dans les trois autres épreuves:\n-Mémoire Verbale: 50/25 Points\n -Mémoire des Images: 50/25 Points\n -Mémoire des Nombres: 10/7 Points \n \n \n","center")
     
     reglesText.config(state=DISABLED)
     reglesQuitButton = Button(reglesText, text="OK", command=regles_quit, background="aquamarine1")
