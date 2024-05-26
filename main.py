@@ -8,22 +8,22 @@ import random
 #On crée les clés des différentes salles et on met leurs valeurs à False
 global key_verbal_memory 
 global key_images_memory 
-global key_pattern_memory
+global key_number_memory
 
 key_verbal_memory = False
 key_images_memory = False
-key_pattern_memory = False
+key_number_memory = False
 
 #On crée les variables des meilleurs scores de chaque salle et on les met à zéro
 global MVHighestScore
 global MIHighestScore
 global MPHighestScore
-global MIXHighestScore
+global MNHighestScore
 
 MVHighestScore = 0
 MIHighestScore = 0
 MPHighestScore = 0
-MIXHighestScore = 0
+MNHighestScore = 0
 
 #On crée les coordonnées de notre sprite (personnage) et on les définit à l'origine
 global coords
@@ -89,8 +89,11 @@ def script():
         else:
           MVLoseLab = Label(MVRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
           MVLoseLab.pack(side=TOP)
-          diff = (5 - score)
-          MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
+          diff = (50 - score)
+          if diff > 1:
+            MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
+          else:
+            MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
           MVLoseLabSubLab.pack(side=TOP, pady=30)
       else:
         #Si le joueur a gagné (au moins 25 points)
@@ -110,7 +113,10 @@ def script():
           MVLoseLab = Label(MVRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
           MVLoseLab.pack(side=TOP)
           diff = (25 - score)
-          MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
+          if diff > 1:
+            MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
+          else:
+            MVLoseLabSubLab = Label(MVRestartMainFrame, text=(f"Votre meilleur score est {MVHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir la clé de Mémoire Verbale"), font=("Arial", 10))
           MVLoseLabSubLab.pack(side=TOP, pady=30)
 
       MVRestartButtons = Frame(MVRestartFrame, relief=GROOVE)
@@ -266,7 +272,7 @@ def script():
         elif mvscore.get() == 50:
           verbal_memory_hint() 
 
-    #Fonction pour donner un indice sur un easter egg si le joueur atteint 75 points dans la mémoire verbale dans une nouvelel fenêtre
+    #Fonction pour donner un indice sur un easter egg si le joueur atteint 75 points dans la mémoire verbale dans une nouvelle fenêtre
     def verbal_memory_hint():
 
       #Fonction pour quitter la fenêtre d'indice
@@ -416,7 +422,10 @@ def script():
           MILoseLab = Label(MIRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
           MILoseLab.pack(side=TOP)
           diff = (50 - score)
-          MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
+          if diff > 1:
+            MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
+          else:
+            MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
           MILoseLabSubLab.pack(side=TOP, pady=30)
 
       #Si le joueur a gagné la partie (au moins 25 points)
@@ -437,7 +446,10 @@ def script():
           MILoseLab = Label(MIRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
           MILoseLab.pack(side=TOP)
           diff = (25 - score)
-          MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
+          if diff > 1:
+            MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
+          else:
+            MILoseLabSubLab = Label(MIRestartMainFrame, text=(f"Votre meilleur score est {MIHighestScore}!\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir la clé de Mémoire des Images"), font=("Arial", 10))
           MILoseLabSubLab.pack(side=TOP, pady=30)
       MIRestartButtons = Frame(MIRestartFrame, relief=GROOVE)
       MIRestartButtons.pack(side=TOP, pady=10)
@@ -587,9 +599,9 @@ def script():
       def miindice_quit():
         MIIndice.destroy()
 
-      MIndice = Tk()
-      MIndice.title("INDICE N°2 |Mémoire des Images")
-      MIndice.geometry("400x200")
+      MIIndice = Tk()
+      MIIndice.title("INDICE N°2 |Mémoire des Images")
+      MIIndice.geometry("400x200")
       MIIndiceMainFrame = Frame(MIndice, borderwidth=1, relief=GROOVE)
       MIIndiceMainFrame.pack(side=TOP)
       if difficulte == True:
@@ -633,8 +645,8 @@ def script():
     image_chemin = []
 
     #On met dans une liste le chemin de toutes les images de la mémoire des images
-    for i in range(1):
-      image_chemin.append(f"ressources/ntm/image_{i}.png")
+    for i in range(150):
+      image_chemin.append(f"ressources/images/image_{i}.png")
 
     #On défini le chemin de l'image actuel comme un élément aléatoire de al liste des chemins
     current_path = random.choice(image_chemin)
@@ -696,23 +708,254 @@ def script():
     #On fait tourner la fenêtre de mémoire des images
     MIFrame.mainloop()
 
-  #FONCTION MEMOIRE PATTERNS
-  def pattern_start():
-    MPFrame = Tk()
-    MPFrame.mainloop()
-    MPFrame.title("Mémoire de pattern | Mémory Game")
-    MPFrame.geometry("800x600")
+  #FONCTION MEMOIRE NOMBRES
+  def MN_start():
+    #On remet les coordonnées à 0
+    reset_coords()
 
-  #FONCTION MEMOIRES MIX
-  def mix_start():
+    #Fin de partie
+    def restart_mn():
 
-    #Si le joueur possède les trois clés, on lance le jeu des mémoires mix
-    if (key_images_memory == True) and (key_pattern_memory == True) and (key_verbal_memory == True):
+      #Relance la frame
+      def mnrestart():
+        MNRestartFrame.destroy()
+        MN_start()
+      
+      #Réouvre la fenêtre principale
+      def mn_quit():
+        MNRestartFrame.destroy()
+        script()
+      
+      #Fenêtre de fin de partie
+      MNFrame.destroy()
+      MNRestartFrame = Tk()
+      MNRestartFrame.title("Partie Terminée | Mémoire des Nombres")
+      MNRestartFrame.geometry("600x350")
+      MNRestartFrameTitle = Frame(MNRestartFrame, relief=GROOVE)
+      MNRestartFrameTitle.pack(side=TOP)
+      MNRestartTitleLabel = Label(MNRestartFrameTitle, text="Partie Terminée !", font=("Arial", 20))
+      MNRestartTitleLabel.pack()
+      MNRestartMainFrame = Frame(MNRestartFrame, relief=GROOVE)
+      MNRestartMainFrame.pack(side=TOP)
+      score = mnscore.get()
+      print(score)
+      if difficulte == True:
+
+        if score >= 10:
+          MNWinLab = Label(MNRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
+          MNWinLab.pack(side=TOP)
+          MNWinLabSubLab = Label(MNRestartMainFrame, text=(f"Votre meilleur score est {MNHighestScore} !\n Vous obtenez la clé de la Mémoire des Nombres!"), font=("Arial", 10))
+          MNWinLabSubLab.pack(side=TOP, pady=30)
+          cle_number_memory = PhotoImage(file="textures/cles/cle_number_memory.png")
+          CanvaCle = Canvas(MNRestartMainFrame, width=80, height=80)
+          CanvaCle.pack(side=TOP)
+          CanvaCle.create_image(0, 0, anchor=NW, image=cle_number_memory)
+          CanvaCle.image = cle_number_memory
+          
+        else:
+          MNLoseLab = Label(MNRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
+          MNLoseLab.pack(side=TOP)
+          diff = (10 - score)
+          if diff > 1:
+            MVLoseLabSubLab = Label(MNRestartMainFrame, text=(f"Votre meilleur score est {MNHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Nombres"), font=("Arial", 10))
+          else:
+            MVLoseLabSubLab = Label(MNRestartMainFrame, text=(f"Votre meilleur score est {MNHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir la clé de Mémoire des Nombres"), font=("Arial", 10))
+          MVLoseLabSubLab.pack(side=TOP, pady=30)
+      else:
+        if score >= 7:
+          MNWinLab = Label(MNRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
+          MNWinLab.pack(side=TOP)
+          MNWinLabSubLab = Label(MNRestartMainFrame, text=(f"Votre meilleur score est {MNHighestScore} !\n Vous obtenez la clé de la Mémoire des Nombres !"), font=("Arial", 10))
+          MNWinLabSubLab.pack(side=TOP, pady=30)
+          cle_number_memory = PhotoImage(file="textures/cles/cle_number_memory.png")
+          CanvaCle = Canvas(MNRestartMainFrame, width=80, height=80)
+          CanvaCle.pack(side=TOP)
+          CanvaCle.create_image(0, 0, anchor=NW, image=cle_number_memory)
+          CanvaCle.image = cle_number_memory
+
+        else:
+          MNLoseLab = Label(MNRestartMainFrame, text=(f"Vous avez perdu ! \n Votre score est de {score}."), font=("Arial", 15))
+          MNLoseLab.pack(side=TOP)
+          diff = (7 - score)
+          if diff > 1:
+            MVLoseLabSubLab = Label(MNRestartMainFrame, text=(f"Votre meilleur score est {MNHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire des Nombres"), font=("Arial", 10))
+          else:
+            MVLoseLabSubLab = Label(MNRestartMainFrame, text=(f"Votre meilleur score est {MNHighestScore} !\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir la clé de Mémoire des Nombres"), font=("Arial", 10))
+          MVLoseLabSubLab.pack(side=TOP, pady=30)
+
+      MNRestartButtons = Frame(MNRestartFrame, relief=GROOVE)
+      MNRestartButtons.pack(side=TOP, pady=10)
+      MNRestartButton = Button(MNRestartButtons, text="Recommencer", command=mnrestart, background="aquamarine1")
+      MNRestartButton.pack(side=LEFT, padx=20, pady=10)
+      MNQuitButton = Button(MNRestartButtons, text="Quitter", command=mn_quit, background="aquamarine1")
+      MNQuitButton.pack(side=RIGHT, padx=20, pady=10)
+
+    #Fonction qui compare le score de mémoire des nombres avec certaines valeurs (victoire et easter egg)
+    def MNcheckScore():
+      if difficulte == True:
+        if mnscore.get() == 10:
+          key_number_memory = True
+          number_memory_reussi()
+        elif mnscore.get() == 12:
+          number_memory_hint()
+      else:
+        if mnscore.get() == 7:
+          key_number_memory = True
+          number_memory_reussi()
+        elif mnscore.get() == 10:
+          number_memory_hint()
+    
+    #Fonction pour donner un indice sur un easter egg si le joueur atteint 12 points dans la mémoire des nombres dans une nouvelle fenêtre
+    def number_memory_hint():
+
+      #Fonction pour quitter la fenêtre d'indice
+      def mnindice_quit():
+        MNIndice.destroy()
+
+      MNIndice = Tk()
+      MNIndice.title("INDICE N°3 |Mémoire des Nombres")
+      MNIndice.geometry("400x200")
+      MNIndiceMainFrame = Frame(MNIndice, borderwidth=1, relief=GROOVE)
+      MNIndiceMainFrame.pack(side=TOP)
+      if difficulte == True:
+        MNIndiceText = Label(MNIndiceMainFrame, text="Bravo pour avoir atteint 12 points dans le jeu de mémoire des nombres,\n voici un indice pour accéder a une salle secrète:")
+      else:
+        MNIndiceText = Label(MNIndiceMainFrame, text="Bravo pour avoir atteint 10 points dans le jeu de mémoire des nombres,\n voici un indice pour accéder a une salle secrète:") 
+      MNIndiceText.pack(side=TOP, padx=5)
+      MNIndiceIndice = Label(MNIndiceMainFrame, text="Code césar - partie 1")
+      MNIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
+      MNIndiceButton = Button(MNIndice, text="Quitter", command=mnindice_quit, background="aquamarine1")
+      MNIndiceButton.pack(side=BOTTOM)
+      MNIndice.mainloop()
+
+    #Fonction qui donne la clé de mémoire des nombres si le joueur atteint 10 points dans une nouvelle fenêtre
+    def number_memory_reussi():
+      #Fonction pour quitter la fenêtre d'annonce de victoire
+      def mnreussi_quit():
+        MNReussi.destroy()
+
+      MNReussi = Tk()
+      MNReussi.title("Réussite | Mémoire des Nombres")
+      MNReussi.geometry("400x150")
+      MNReussiText = Label(MNReussi, text="Bravo, vous avez réussi l'épreuve de Mémoire \n des Nombres et avez obtenu une clé !")
+      MNReussiText.pack(side=TOP, padx=15, pady=25)
+      MNReussiButton = Button(MNReussi, text="OK", command=mnreussi_quit, background="aquamarine1")
+      MNReussiButton.pack(side=BOTTOM, padx=15, pady=15)
+      MNReussi.mainloop()
+
+    #Affichage des règles
+    def MNregles():
+      print("coucou")
+
+    #Lancement
+    def NumberMemoryStart():
+      global mncoup
+      mncoup = 1
+      StartBTN.destroy()
+      FrameNumber.pack(side=TOP, pady=20)
+      #MNentry.pack()
+      MNcontinuerBTN.pack(pady=20)
+      global nb
+      nb = str(random.randint(0, 9))
+      mnNb.set(nb)
+      global mnverif
+      mnverif = True
+
+    #L'utilisateur appuie sur continuer
+    def continuer():
+      global mnverif
+      global nb
+      global mot
+      global mncoup
+      global MNHighestScore
+      mot = mntexte.get()
+      MNentry.delete(0, 'end')
+      if mnverif == False:
+        MNentry.pack_forget()
+        if not mot:
+          Frameerreur = Tk()
+          Frameerreur.title("Skill Issue ?")
+          Frameerreur.geometry("300x50")
+          erreurlabel = Label(Frameerreur, text="Veuillez entrez un nombre", font=("Arial", 15))
+          erreurlabel.pack()
+          Frameerreur.mainloop()
+        else:
+          if mot==nb:
+            score = mnscore.get()
+            score+=1
+            mnscore.set(score)
+            if score > MNHighestScore:
+              MNHighestScore = score
+              mnHighestScore.set(score)
+            nb = ""
+            mncoup+=1
+            for it in range(mncoup):
+              nb+=str(random.randint(0, 9))
+            mnNb.set(nb)
+            mnverif = True
+            MNcheckScore()
+          else:
+            restart_mn()
+      else:
+        MNentry.pack()
+        mnNb.set("?")
+        mnverif = False
+
+    #création de la fenêtre
+    MNFrame = Tk()
+
+    #création des variables
+    mnHighestScore = IntVar()
+    mnscore = IntVar()
+    mnNb = StringVar()
+    mntexte = StringVar()
+    MNFrame.title("Mémoire des Nombres | Memory Game")
+    MNFrame.geometry("700x350")
+
+    #création des éléments
+    FrameInfos = Frame(MNFrame, borderwidth=1, relief=GROOVE)
+    FrameInfos.pack(side=TOP, padx=5)
+    MemoireNombreLabel = Label(FrameInfos, text="Mémoire des Nombres", font=("Arial",30))
+    MemoireNombreLabel.pack(padx=5, pady=5)
+
+    MNreglesBTN = Button(FrameInfos, text='Règles', font=("Arial", 10), command=MNregles, background="aquamarine1")
+    MNreglesBTN.pack(side=RIGHT)
+
+    MNScoreLabelTxt = Label(FrameInfos, text="Score :", font=("Arial", 10))
+    MNScoreLabelTxt.pack(side=LEFT)
+    MNscoreLabel = Label(FrameInfos, textvariable=mnscore, font=("Arial", 10))
+    MNscoreLabel.pack(side=LEFT)
+    MNHighestScoreLabelTxt = Label(FrameInfos, text="Meilleur Score :", font=("Arial", 10))
+    MNHighestScoreLabelTxt.pack(side=LEFT)
+    MNHighestScoreLabel = Label(FrameInfos, textvariable=mnHighestScore, font=("Arial", 10))
+    MNHighestScoreLabel.pack(side=LEFT)
+
+    StartBTN = Button(MNFrame, command=NumberMemoryStart, text="Commencer")
+    StartBTN.pack(side=TOP, pady=50)
+
+    FrameNumber = Frame(MNFrame, relief=GROOVE)
+    CurrentNb = Label(FrameNumber, textvariable=mnNb, font=("Arial", 30))
+    CurrentNb.pack(side=TOP, pady=20)
+
+    MNentry = Entry(MNFrame, textvariable=mntexte, width=15)
+    MNcontinuerBTN = Button(MNFrame, text="Continuer" ,command=continuer, background="azure", font=("Arial", 10))
+
+    #On donne la valeur du meilleur score de la mémoire des nb
+    mnHighestScore.set(MNHighestScore)
+
+    #loop
+    MNFrame.mainloop()
+
+  #FONCTION MEMOIRES MP
+  def MP_start():
+
+    #Si le joueur possède les trois clés, on lance le jeu des mémoires MP
+    if (key_images_memory == True) and (key_number_memory == True) and (key_verbal_memory == True):
       mainFrame.destroy()
-      MIXFrame = Tk()
-      MIXFrame.mainloop()
-      MIXFrame.title("Mémoires Mix | Mémory Game")
-      MIXFrame.geometry("800x600")
+      MPFrame = Tk()
+      MPFrame.mainloop()
+      MPFrame.title("Mémoire de Patterns | Memory Game")
+      MPFrame.geometry("800x600")
     #Si le joueur ne possède pas toutes les clés, on crée une fenêtre qui affiche les scores à faire pour obtenir toutes les clés
     else:
       #Fonction qui ferme la fenêtre d'erreur
@@ -724,14 +967,14 @@ def script():
       IntMVHighestScore.set(MVHighestScore)
       IntMIHighestScore = IntVar(Error)
       IntMIHighestScore.set(MIHighestScore)
-      IntMPHighestScore = IntVar(Error)
-      IntMPHighestScore.set(MIHighestScore)
+      IntMNHighestScore = IntVar(Error)
+      IntMNHighestScore.set(MNHighestScore)
 
-      Error.title("Erreur | Mémoires Mix")
+      Error.title("Erreur | Mémoires MP")
       Error.geometry("450x200")
       ErrorFrame = Frame(Error, borderwidth=1, relief=GROOVE)
       ErrorFrame.pack(side=TOP)
-      ErrorLabel = Label(ErrorFrame, text="Erreur, il vous manque au moins une clé pour accéder \n à la salle des épreuves mix.\n Complétez les objectifs suivants pour \n débloquer l'accès à la dernière épreuve:")
+      ErrorLabel = Label(ErrorFrame, text="Erreur, il vous manque au moins une clé pour accéder \n à la salle des épreuves de Mémoire des Patterns.\n Complétez les objectifs suivants pour \n débloquer l'accès à la dernière épreuve:")
       ErrorLabel.pack(padx=10)
       ErrorMessagesFrame = Frame(Error, borderwidth=1, relief=GROOVE)
 
@@ -755,14 +998,14 @@ def script():
         ErrorMILabel3.pack(side=LEFT)
         ErrorFrameMI.pack(side=TOP)
 
-        ErrorFrameMP = Frame(ErrorMessagesFrame, relief=GROOVE)
-        ErrorMPLabel1 = Label(ErrorFrameMP, text="Objectif à compléter pour obtenir la clé de mémoire des patterns: (")
-        ErrorMPLabel1.pack(side=LEFT)
-        ErrorMPLabel2 = Label(ErrorFrameMP, textvariable=IntMPHighestScore)
-        ErrorMPLabel2.pack(side=LEFT)
-        ErrorMPLabel3 = Label(ErrorFrameMP, text="/ 15 )")
-        ErrorMPLabel3.pack(side=LEFT)
-        ErrorFrameMP.pack(side=TOP)
+        ErrorFrameMN = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMNLabel1 = Label(ErrorFrameMN, text="Objectif à compléter pour obtenir la clé de mémoire des nombres: (")
+        ErrorMNLabel1.pack(side=LEFT)
+        ErrorMNLabel2 = Label(ErrorFrameMN, textvariable=IntMNHighestScore)
+        ErrorMNLabel2.pack(side=LEFT)
+        ErrorMNLabel3 = Label(ErrorFrameMN, text="/ 10 )")
+        ErrorMNLabel3.pack(side=LEFT)
+        ErrorFrameMN.pack(side=TOP)
 
       else:
         ErrorFrameMV = Frame(ErrorMessagesFrame, relief=GROOVE)
@@ -783,14 +1026,14 @@ def script():
         ErrorMILabel3.pack(side=LEFT)
         ErrorFrameMI.pack(side=TOP)
 
-        ErrorFrameMP = Frame(ErrorMessagesFrame, relief=GROOVE)
-        ErrorMPLabel1 = Label(ErrorFrameMP, text="Objectif à compléter pour obtenir la clé de mémoire des patterns: (")
-        ErrorMPLabel1.pack(side=LEFT)
-        ErrorMPLabel2 = Label(ErrorFrameMP, textvariable=IntMPHighestScore)
-        ErrorMPLabel2.pack(side=LEFT)
-        ErrorMPLabel3 = Label(ErrorFrameMP, text="/ 10 )")
-        ErrorMPLabel3.pack(side=LEFT)
-        ErrorFrameMP.pack(side=TOP)
+        ErrorFrameMN = Frame(ErrorMessagesFrame, relief=GROOVE)
+        ErrorMNLabel1 = Label(ErrorFrameMN, text="Objectif à compléter pour obtenir la clé de mémoire des nombres: (")
+        ErrorMNLabel1.pack(side=LEFT)
+        ErrorMNLabel2 = Label(ErrorFrameMN, textvariable=IntMNHighestScore)
+        ErrorMNLabel2.pack(side=LEFT)
+        ErrorMNLabel3 = Label(ErrorFrameMN, text="/ 7 )")
+        ErrorMNLabel3.pack(side=LEFT)
+        ErrorFrameMN.pack(side=TOP)
 
       ErrorMessagesFrame.pack(pady=15)
       ErrorQuitButton = Button(Error, text="OK", command=error_quit, background="aquamarine1")
@@ -833,14 +1076,14 @@ def script():
         elif (coords[0] == 740 and coords[1] == 300) or (coords[0] == 740 and coords[1] == 280):
             coords = (400, 300)
             mainFrame.destroy()
-            pattern_start()
+            MN_start()
         elif (coords[0] == 400 and coords[1] == 540) or (coords[0] == 380 and coords[1] == 540):
             coords = (400, 300)
             mainFrame.destroy()
             images_memory_start()
         elif (coords[0] == 400 and coords[1] == 40) or (coords[0] == 380 and coords[1] == 40):
             coords = (400, 300)
-            mix_start()
+            MP_start()
     elif (touche == "a") and (coords[0] == 740) and (coords[1] == 40):
       coords = (400,300)
       mainFrame.destroy()
@@ -1009,7 +1252,7 @@ def startGame():
     reglesText.insert(END, "\n","center")
     reglesText.insert(END, "Règles générales :\n","center")
     reglesText.insert(END, "'Memory Game' est un jeu composé de quatre salles, chacune d'elle représentant une épreuve.\n","center")
-    reglesText.insert(END, "Ces épreuves sont:\n -La Mémoire Verbale (à gauche)\n -La Mémoire des Images (en bas)\n -La Mémoire des Patterns (à droite)\n -Les Mémoires Mix (en haut)","center")
+    reglesText.insert(END, "Ces épreuves sont:\n -La Mémoire Verbale (à gauche)\n -La Mémoire des Images (en bas)\n -La Mémoire des Nombres (à droite)\n -La Mémoire des Patterns (en haut)","center")
     reglesText.insert(END, "Les règles de chacune de ses épreuves sont disponibles quand vous y accédez.\n","center")
     reglesText.insert(END, "\n","center")
     reglesText.insert(END, "Salle Principale :\n","center")
@@ -1025,9 +1268,9 @@ def startGame():
     reglesText.insert(END, "Des Easter Eggs sont dissimulés dans le jeu, soyez attentifs pour essayer de tous les trouver.\n","center")
     reglesText.insert(END, "Note: Vous pouvez utiliser les différents fichiers Python mis à votre disposition\n","center")
     reglesText.insert(END, "\n","center")
-    reglesText.insert(END, "Accès à la salle MIX:\n","center")
+    reglesText.insert(END, "Accès à la salle MP:\n","center")
     reglesText.insert(END, "Afin d'accéder à la salle finale du jeu, vous aurez besoin d'obtenir un certain score dans les trois autres épreuves:\n","center")
-    reglesText.insert(END, "-Mémoire Verbale: 50 Points\n -Mémoire des Images: 50 Points\n -Mémoire des Patterns: 15 Points \n","center")
+    reglesText.insert(END, "-Mémoire Verbale: 50/25 Points\n -Mémoire des Images: 50/25 Points\n -Mémoire des Nombres: 10/7 Points \n","center")
     reglesText.insert(END, "\n \n","center")
     
     reglesText.config(state=DISABLED)
