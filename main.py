@@ -749,7 +749,6 @@ def script():
       MNRestartMainFrame = Frame(MNRestartFrame, relief=GROOVE)
       MNRestartMainFrame.pack(side=TOP)
       score = mnscore.get()
-      print(score)
       if difficulte == True:
 
         if score >= 10:
@@ -885,11 +884,16 @@ def script():
       if mnverif == False:
         MNentry.pack_forget()
         if not mot:
+          def quiterror():
+            Frameerreur.destroy()
           Frameerreur = Tk()
           Frameerreur.title("Skill Issue ?")
-          Frameerreur.geometry("300x50")
-          erreurlabel = Label(Frameerreur, text="Veuillez entrez un nombre", font=("Arial", 15))
+          Frameerreur.geometry("300x100")
+          erreurlabel = Label(Frameerreur, text="Veuillez entrer un nombre", font=("Arial", 15))
           erreurlabel.pack()
+          erreurboutton = Button(Frameerreur, text='OK', command=quiterror, bg="aquamarine1")
+          erreurboutton.pack(side=BOTTOM, pady=10)
+          MNentry.pack()
           Frameerreur.mainloop()
         else:
           if mot==nb:
@@ -922,10 +926,10 @@ def script():
     mnNb = StringVar()
     mntexte = StringVar()
     MNFrame.title("Mémoire des Nombres | Memory Game")
-    MNFrame.geometry("700x350")
+    MNFrame.geometry("700x400")
 
     #création des éléments
-    FrameInfos = Frame(MNFrame, relief=GROOVE, borderwidhth=1)
+    FrameInfos = Frame(MNFrame, relief=GROOVE, borderwidth=1)
     FrameInfos.pack(side=TOP, padx=5)
     MemoireNombreLabel = Label(FrameInfos, text="Mémoire des Nombres", font=("Arial",30))
     MemoireNombreLabel.pack(padx=5, pady=5)
@@ -1080,7 +1084,8 @@ def script():
     elif touche == "Left" and coords[0] > 40:
         coords = (coords[0] - 20, coords[1])
         canva_tableau.coords(rectangle, coords[0], coords[1])
-    #Si le touche est "e", et que les coordonnées du sprite correspondent aux coordonnées des portes,
+
+    #Si la touche est "e", et que les coordonnées du sprite correspondent aux coordonnées des portes,
     #On appelle les différentes fonctions des jeux de mémoires et on remet les coordonnées à 0
 
     elif touche == "e":
@@ -1306,9 +1311,19 @@ def script():
   MapPixelArt = PhotoImage(file="textures/map_pixelart.png")
   canva_tableau.create_image(0, 0, anchor=NW, image=MapPixelArt)
 
+  #On charge et importe les textures de l'ordinateur
+  computer = PhotoImage(file="textures/map_elements/computer.png")
+  canva_tableau.create_image(40, 40, image=computer, anchor=NW)
+
+  #On charge et importe les textures du parchemin
+  scroll = PhotoImage(file="textures/map_elements/scroll.png")
+  canva_tableau.create_image(700, 160, image=scroll, anchor=NW)
+
   #On charge et importe les textures du sprite
   sprite = PhotoImage(file="textures/sprite.png")
   rectangle = canva_tableau.create_image(400, 300, image=sprite, anchor=NW)
+
+
 
   #On ajoute un écouteur d'évènement sur les touches du clavier, activant la fonction deplacement
   canva_tableau.focus_set()
@@ -1388,7 +1403,7 @@ def startGame():
     
     reglesText.tag_configure("center", justify='center')
 
-    reglesText.insert(END, "Le jeu 'Memory Game' a été réalisé par\nThomas KELEMEN & Gabriel CADEAU-FLAUJAT,\ndeux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\n\nRègles générales :\n'Memory Game' est un jeu composé de quatre salles, chacune d'elle représentant une épreuve.\n\nCes épreuves sont :\n -La Mémoire Verbale (à gauche)\n -La Mémoire des Images (en bas)\n -La Mémoire des Nombres (à droite)\n -La Mémoire des Patterns (en haut).\nLes règles de chacune de ses épreuves sont disponibles quand vous y accédez.\n\nSalle Principale :\nLa salle principale est une salle libre dans laquelle vous pouvez vous déplacer pour accéder aux différentes épreuves.\nChacune des portes correspond à une épreuve différente.\n\nContrôles :\nAfin de vous déplacer dans la salle principale, utilisez les flèches de votre clavier.\nPour entrer dans les différentes salles, utilisez la touche 'e'.\nDans les salles d'épreuves, utilisez la souris pour vous déplacer et le clique gauche pour intéragir avec les différents éléments\n\nEaster Egg :\nDes Easter Eggs sont dissimulés dans le jeu, soyez attentifs pour essayer de tous les trouver.\nNote: Vous pouvez utiliser les différents fichiers Python mis à votre disposition\n\nAccès à la salle de Mémoire des Patterns:\nAfin d'accéder à la salle finale du jeu, vous aurez besoin d'obtenir un certain score dans les trois autres épreuves:\n-Mémoire Verbale: 50/25 Points\n -Mémoire des Images: 50/25 Points\n -Mémoire des Nombres: 10/7 Points \n \n \n","center")
+    reglesText.insert(END, "Le jeu 'Memory Game' a été réalisé par\nThomas KELEMEN & Gabriel CADEAU-FLAUJAT,\ndeux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\n\nRègles générales :\n'Memory Game' est un jeu composé de quatre salles, chacune d'elle représentant une épreuve.\n\nCes épreuves sont :\n -La Mémoire Verbale (à gauche)\n -La Mémoire des Images (en bas)\n -La Mémoire des Nombres (à droite)\n -La Mémoire des Patterns (en haut).\nLes règles de chacune de ses épreuves sont disponibles quand vous y accédez.\n\nSalle Principale :\nLa salle principale est une salle libre dans laquelle vous pouvez vous déplacer pour accéder aux différentes épreuves.\nChacune des portes correspond à une épreuve différente.\n\nContrôles :\nAfin de vous déplacer dans la salle principale, utilisez les flèches de votre clavier.\nPour entrer dans les différentes salles, utilisez la touche 'e'.\nDans les salles d'épreuves, utilisez la souris pour vous déplacer et le clique gauche pour intéragir avec les différents éléments\n\nEaster Egg :\nDes Easter Eggs sont dissimulés dans le jeu, soyez attentifs pour essayer de tous les trouver.\nNote: Vous pouvez utiliser les différents fichiers Python mis à votre disposition\n\nAccès à la salle de Mémoire des Patterns:\nAfin d'accéder à la salle finale du jeu, vous aurez besoin d'obtenir un certain score dans les trois autres épreuves:\n-Mémoire Verbale: 25 Points en mode facile/ 50 Points en mode difficile\n -Mémoire des Images: 25 Points en mode facile/ 50 Points en mode difficile\n -Mémoire des Nombres: 7 Points en mode facile/ 10 Points en mode difficile \n \n \n","center")
     
     reglesText.config(state=DISABLED)
     reglesQuitButton = Button(reglesText, text="OK", command=regles_quit, background="aquamarine1")
