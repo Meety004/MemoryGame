@@ -289,7 +289,7 @@ def script():
       else:
         MVIndiceText = Label(MVIndiceMainFrame, text="Bravo pour avoir atteint 50 points dans le jeu de mémoire verbale,\n voici un indice pour accéder a une salle secrète:") 
       MVIndiceText.pack(side=TOP, padx=5)
-      MVIndiceIndice = Label(MVIndiceMainFrame, text="Code césar - partie 1")
+      MVIndiceIndice = Label(MVIndiceMainFrame, text="w Iecnozasax etpoq alfltymir ...")
       MVIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
       MVIndiceButton = Button(MVIndice, text="Quitter", command=mvindice_quit, background="aquamarine1")
       MVIndiceButton.pack(side=BOTTOM)
@@ -324,7 +324,7 @@ def script():
     MVFrame.geometry("600x500")
 
     #On crée les différents éléments de la fenêtre
-    FrameInfos = Frame(MVFrame, relief=GROOVE)
+    FrameInfos = Frame(MVFrame, relief=GROOVE, borderwidth=1)
     FrameInfos.pack(side=TOP, padx=5)
     MemoireVerbaleLabel = Label(FrameInfos, text="Mémoire Verbale", font=("Arial",30))
     MemoireVerbaleLabel.pack(padx=5, pady=5)
@@ -353,18 +353,17 @@ def script():
     dejavuBTN = Button(FrameJeu, text="Déjà Vu", command=check_dejavu, background="azure", font=("Arial", 10))
     nouveaumotBTN = Button(FrameJeu, text="Nouveau Mot", command=check_nouveau_mot, background="azure", font=("Arial",10))
 
+    LicenseLabel = Label(MVFrame, text="Memory Game, Thomas KELEMEN & Gabriel CADEAU-FLAUJAT \n © Tous droits réservés. 2024 ")
+    LicenseLabel.pack(side=BOTTOM)
 
     FrameVie = Frame(MVFrame, borderwidth=1, relief=GROOVE)
-    FrameVie.pack(side=BOTTOM, pady=75)
+    FrameVie.pack(side=BOTTOM, pady=60)
     ThreeHearts = PhotoImage(file="textures/vie/3hearts.png")
     TwoHearts = PhotoImage(file="textures/vie/2hearts.png")
     OneHeart = PhotoImage(file="textures/vie/1heart.png")
     CanvaVie3 = Canvas(FrameVie, width=ThreeHearts.width(), height=ThreeHearts.height())
     CanvaVie3.create_image(0, 0, anchor=NW, image=ThreeHearts)
     CanvaVie3.pack(side=BOTTOM)
-
-    LicenseLabel = Label(MVFrame, text="Memory Game, Thomas KELEMEN & Gabriel CADEAU-FLAUJAT \n © Tous droits réservés. 2024 ")
-    LicenseLabel.pack(side=BOTTOM)
 
     #On donne la valeur du meilleur score de mémoire verbale à la variable tKinter de même nom
     mvHighestScore.set(MVHighestScore)
@@ -496,8 +495,12 @@ def script():
     def choice_image():
       global micoup, SeenPics, current_image_indice
       randomizer = random.randint(0,11)
-      if (randomizer <= 5):
-        indice = random.choice(SeenPics)
+      if (randomizer <= 5) and len(SeenPics)>1:
+        verif = False
+        while verif == False:
+          indice = random.choice(SeenPics)
+          if indice != current_image_indice:
+            verif = True
         current_image = PhotoImage(file=image_chemin[indice])
         current_path = image_chemin[indice]
         for i in range(len(image_chemin)):
@@ -546,23 +549,24 @@ def script():
         else:
           score = miscore.get()
           score += 1
+          miscore.set(score)
+          SeenPics.append(current_image_indice)
           if score >= MIHighestScore:
             MIHighestScore = score
             miHighestScore.set(score)
           MIcheckScore()
-          SeenPics.append(current_image_indice)
         choice_image()
       else:
           score = miscore.get()
           score += 1
+          micoup += 1
+          SeenPics.append(current_image_indice)
+          choice_image() 
           miscore.set(score)
           if score >= MIHighestScore:
             MIHighestScore = score
             miHighestScore.set(score)
           MIcheckScore()
-          micoup += 1
-          SeenPics.append(current_image_indice)
-          choice_image()  
 
     #Affiches les règles de la mémoire des images dans une nouvellle fenêtre
     def MIreglesPrint():
@@ -605,7 +609,7 @@ def script():
       MIIndice = Tk()
       MIIndice.title("INDICE N°2 |Mémoire des Images")
       MIIndice.geometry("400x200")
-      MIIndiceMainFrame = Frame(MIndice, borderwidth=1, relief=GROOVE)
+      MIIndiceMainFrame = Frame(MIIndice, borderwidth=1, relief=GROOVE)
       MIIndiceMainFrame.pack(side=TOP)
       if difficulte == True:
         MIIndiceText = Label(MIIndiceMainFrame, text="Bravo pour avoir atteint 75 points dans le jeu de mémoire des images,\n voici un indice pour accéder a une salle secrète:")
@@ -613,7 +617,7 @@ def script():
         MIIndiceText = Label(MIIndiceMainFrame, text="Bravo pour avoir atteint 50 points dans le jeu de mémoire des images,\n voici un indice pour accéder a une salle secrète:")
       
       MIIndiceText.pack(side=TOP, padx=5)
-      MIIndiceIndice = Label(MIIndiceMainFrame, text="Code césar - partie 2")
+      MIIndiceIndice = Label(MIIndiceMainFrame, text="... ijcnsjrguvy togkt zshmifhdg,a ...")
       MIIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
       MIIndiceButton = Button(MIIndice, text="Quitter", command=miindice_quit, background="aquamarine1")
       MIIndiceButton.pack(side=BOTTOM)
@@ -667,7 +671,7 @@ def script():
     MIFrame.geometry("600x500")
 
     #On crée les différents éléments Tkinter de la mémoire des images
-    FrameInfos = Frame(MIFrame, relief=GROOVE)
+    FrameInfos = Frame(MIFrame, relief=GROOVE, borderwidth=1)
     FrameInfos.pack(side=TOP, padx=5)
     MemoireImagesLabel = Label(FrameInfos, text="Mémoire des Images", font=("Arial",30))
     MemoireImagesLabel.pack(padx=5, pady=5)
@@ -829,7 +833,7 @@ def script():
       else:
         MNIndiceText = Label(MNIndiceMainFrame, text="Bravo pour avoir atteint 10 points dans le jeu de mémoire des nombres,\n voici un indice pour accéder a une salle secrète:") 
       MNIndiceText.pack(side=TOP, padx=5)
-      MNIndiceIndice = Label(MNIndiceMainFrame, text="Code césar - partie 1")
+      MNIndiceIndice = Label(MNIndiceMainFrame, text="... imtyamahl ggcjqlsdfcaphxu dbfgijo ...")
       MNIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
       MNIndiceButton = Button(MNIndice, text="Quitter", command=mnindice_quit, background="aquamarine1")
       MNIndiceButton.pack(side=BOTTOM)
@@ -841,6 +845,7 @@ def script():
       def mnreussi_quit():
         MNReussi.destroy()
 
+      key_number_memory = True
       MNReussi = Tk()
       MNReussi.title("Réussite | Mémoire des Nombres")
       MNReussi.geometry("400x150")
@@ -920,7 +925,7 @@ def script():
     MNFrame.geometry("700x350")
 
     #création des éléments
-    FrameInfos = Frame(MNFrame, relief=GROOVE)
+    FrameInfos = Frame(MNFrame, relief=GROOVE, borderwidhth=1)
     FrameInfos.pack(side=TOP, padx=5)
     MemoireNombreLabel = Label(FrameInfos, text="Mémoire des Nombres", font=("Arial",30))
     MemoireNombreLabel.pack(padx=5, pady=5)
@@ -1100,10 +1105,9 @@ def script():
       easter_egg()
 
   def easter_egg():
-    print("a")
 
     def deplacementEaster(event):
-      global easterCoords
+      global easterCoords, MapPixelArtEasterNoGaster, rectangleEaster
 
       linkCoords = [
         (100, 120),
@@ -1121,7 +1125,61 @@ def script():
         (100, 180),
         (120, 180),
         (140, 180),
-        (160, 180)
+        (160, 180)]
+
+      pacmanCoords = [
+        (480, 180),
+        (500, 180),
+        (520, 180),
+        (540, 180),
+        (480, 200),
+        (500, 200),
+        (520, 200),
+        (540, 200),
+        (480, 220),
+        (500, 220),
+        (520, 220),
+        (540, 220),
+        (480, 240),
+        (500, 240),
+        (520, 240),
+        (540, 240)]
+
+      marioCoords =  [
+        (100, 540),
+        (80, 540),
+        (60, 540),
+        (40, 540),
+        (100, 520),
+        (80, 520),
+        (60, 520),
+        (40, 520),
+        (100, 500),
+        (80, 500),
+        (60, 500),
+        (40, 500),
+        (100, 480),
+        (80, 480),
+        (60, 480),
+        (40, 480)]
+
+      gasterCoords = [
+        (680, 480),
+        (700, 480),
+        (720, 480),
+        (740, 480),
+        (680, 500),
+        (700, 500),
+        (720, 500),
+        (740, 500),
+        (680, 520),
+        (700, 520),
+        (720, 520),
+        (740, 520),
+        (680, 540),
+        (700, 540),
+        (720, 540),
+        (740, 540),
       ]
 
       touche = event.keysym
@@ -1130,47 +1188,94 @@ def script():
       if touche == "Up" and easterCoords[1] > 40:
         easterCoords = (easterCoords[0], easterCoords[1] - 20)
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
-        print(easterCoords)
       #Si la touche est la flèche du bas et que le sprite n'a pas déjà atteint le mur du bas, on descend de 20 pixels
       elif touche == "Down" and easterCoords[1] < 540:
         easterCoords = (easterCoords[0], easterCoords[1] + 20)
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
-        print(easterCoords)
       #Si la touche est la flèche de droite et que le sprite n'a pas déjà atteint le mur de droite, on se déplace de 20 pixels à droite
       elif touche == "Right" and easterCoords[0] < 740:
         easterCoords = (easterCoords[0] + 20, easterCoords[1])
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
-        print(easterCoords)
       #Si la touche est la flèche de gauche et que le sprite n'a pas déjà atteint le mur de gauche, on se déplace de 20 pixels à gauche
       elif touche == "Left" and easterCoords[0] > 40:
         easterCoords = (easterCoords[0] - 20, easterCoords[1])
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
-        print(easterCoords)
       elif touche == "e":
         if (easterCoords[0] == 400 and easterCoords[1] == 40) or (easterCoords[0] == 380 and easterCoords[1] == 40):
           easterFrame.destroy()
           script()
         elif (easterCoords in linkCoords):
-          print("ça marche")
+          def link_quit():
+            LinkFrame.destroy()
+          LinkFrame = Toplevel()
+          LinkFrame.title("Link")
+          LinkFrame.geometry("200x100")
+
+          LinkLabel = Label(LinkFrame, text="Je voulais retrouver Zelda \nmais je me suis perdu !", font=("Arial", 10))
+          LinkLabel.pack(padx=10)
+          LinKQuitBtn = Button(LinkFrame, text="OK", command=link_quit, background="aquamarine1")
+          LinKQuitBtn.pack(side=BOTTOM, pady=10)
+
+          LinkFrame.mainloop()
+
+        elif (easterCoords in pacmanCoords):
+          def pacman_quit():
+            pacmanFrame.destroy()
+          pacmanFrame = Toplevel()
+          pacmanFrame.title("Pac Man")
+          pacmanFrame.geometry("200x100")
+
+          pacmanLabel = Label(pacmanFrame, text="J'ai faim mais les \nfantômes n'existent plus !", font=("Arial", 10))
+          pacmanLabel.pack(padx=10)
+          pacmanQuitBtn = Button(pacmanFrame, text="OK", command=pacman_quit, background="aquamarine1")
+          pacmanQuitBtn.pack(side=BOTTOM, pady=10)
+
+          pacmanFrame.mainloop()
+
+
+        elif (easterCoords in marioCoords):
+          def mario_quit():
+            marioFrame.destroy()
+          marioFrame = Toplevel()
+          marioFrame.title("Mario")
+          marioFrame.geometry("200x100")
+
+          marioLabel = Label(marioFrame, text="'Woohaaaa' \n(en italien)", font=("Arial", 10))
+          marioLabel.pack(padx=10)
+          marioQuitBtn = Button(marioFrame, text="OK", command=mario_quit, background="aquamarine1")
+          marioQuitBtn.pack(side=BOTTOM, pady=10)
+
+          marioFrame.mainloop()
+
+        elif (easterCoords in gasterCoords):
+          grid_easter.delete("all")
+          grid_easter.create_image(0, 0, anchor=NW, image=MapPixelArtEasterNoGaster)
+          rectangleEaster = grid_easter.create_image(easterCoords[0], easterCoords[1], image=sprite, anchor=NW)
+          grid_easter.pack()
+
+        
           
         
       
     #TKINTER SALLE EASTER EGGS#
     
-    global easterCoords
+    global easterCoords, MapPixelArtEasterNoGaster, rectangleEaster, sprite
     easterCoords = (400,300)
 
     #On crée la fenêtre principale
     easterFrame = Tk()
     easterFrame.title("Easter Egg | Memory Game")
     easterFrame.geometry("800x600")
-
     #On crée un tableau dans lequel le sprite se déplace
-    grid_easter = Canvas(easterFrame, width=800, height=600)
+    FrameGrid = Frame(easterFrame)
+    FrameGrid.pack(side=TOP)
+    grid_easter = Canvas(FrameGrid, width=800, height=600)
 
     #On charge et importe les textures de la map
     MapPixelArtEaster = PhotoImage(file="textures/map_easter_gaster.png")
-    grid_easter.create_image(0, 0, anchor=NW, image=MapPixelArtEaster)
+    MapPixelArtEasterNoGaster = PhotoImage(file="textures/map_easter.png")
+    MapEasterGCast = grid_easter.create_image(0, 0, anchor=NW, image=MapPixelArtEaster)
+    
 
     #On charge et importe les textures du sprite
     sprite = PhotoImage(file="textures/sprite.png")
