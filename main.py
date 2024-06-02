@@ -9,10 +9,12 @@ import random
 global key_verbal_memory 
 global key_images_memory 
 global key_number_memory
+global trophy
 
 key_verbal_memory = False
 key_images_memory = False
 key_number_memory = False
+trophy = False
 
 #On crée les variables des meilleurs scores de chaque salle et on les met à zéro
 global MVHighestScore
@@ -38,6 +40,7 @@ def script():
   #On remet les coordonnées à 0
   def reset_coords():
     coords = (400, 300)
+  
 
   #FONCTION DE LA MEMOIRE VERBALE
   def verbal_memory_start():
@@ -259,6 +262,7 @@ def script():
 
     #Fonction qui compare le score de mémoire verbale avec certaines valeurs (victoire et easter egg)
     def MVcheckScore():
+      global key_verbal_memory
       if difficulte == True:
         if mvscore.get() == 50:
           key_verbal_memory = True
@@ -586,6 +590,7 @@ def script():
 
     #Fonction qui s'active si on a 50 ou 75 points
     def MIcheckScore():
+      global key_images_memory
       if difficulte == True:
         if miscore.get() == 50:
           key_images_memory = True
@@ -802,6 +807,7 @@ def script():
 
     #Fonction qui compare le score de mémoire des nombres avec certaines valeurs (victoire et easter egg)
     def MNcheckScore():
+      global key_number_memory
       if difficulte == True:
         if mnscore.get() == 10:
           key_number_memory = True
@@ -965,7 +971,7 @@ def script():
     #loop
     MNFrame.mainloop()
 
-  #FONCTION MEMOIRES MP
+  #FONCTION MEMOIRES DE PATTERN
   def MP_start():
 
     #Si le joueur possède les trois clés, on lance le jeu des mémoires MP
@@ -989,7 +995,7 @@ def script():
       IntMNHighestScore = IntVar(Error)
       IntMNHighestScore.set(MNHighestScore)
 
-      Error.title("Erreur | Mémoires MP")
+      Error.title("Erreur | Mémoires de Patterns")
       Error.geometry("450x200")
       ErrorFrame = Frame(Error, borderwidth=1, relief=GROOVE)
       ErrorFrame.pack(side=TOP)
@@ -1061,6 +1067,216 @@ def script():
       #On lance la fenêtre d'erreur
       Error.mainloop()
 
+  #FONCTION POUR GERER L'AFFICHAGE DES ELEMENTS A DROITE DE LA FENETRE
+  def check_coords_cast():
+    global coords, DeplacementImage, ImageDeplacementE
+    interact_list = [
+      (40,300),
+      (40,280),
+      (740,300),
+      (740,280),
+      (400,540),
+      (380,540),
+      (400,40),
+      (380,40),
+      (700,160),
+      (720,160),
+      (700,180),
+      (720,180),
+      (40,40),
+      (40,60),
+      (60,40),
+      (60,60)
+    ]
+    if coords in interact_list:
+      CanvaDeplacement.delete('all')
+      ImageDeplacementE = PhotoImage(file="textures/deplacement/left_e.png")
+      CanvaDeplacement.create_image(0,0, image=ImageDeplacementE, anchor=NW)
+      CanvaDeplacement.pack()
+    else:
+      CanvaDeplacement.delete('all')
+      CanvaDeplacement.create_image(0,0, image=DeplacementImage, anchor=NW)
+      CanvaDeplacement.pack()
+
+  #FONCTION POUR GERER L'AFFICHAGE DES ELEMENTS A DROITE DE LA FENETRE D'EASTER EGG
+  def check_coords_cast_easter():
+    global easterCoords, DeplacementImage, ImageDeplacementE, CanvaDeplacementEaster
+    interact_list_easter = [
+        (100, 120),
+        (120, 120),
+        (140, 120),
+        (160, 120),
+        (100, 140),
+        (120, 140),
+        (140, 140),
+        (160, 140),
+        (100, 160),
+        (120, 160),
+        (140, 160),
+        (160, 160),
+        (100, 180),
+        (120, 180),
+        (140, 180),
+        (160, 180),
+        (480, 180),
+        (500, 180),
+        (520, 180),
+        (540, 180),
+        (480, 200),
+        (500, 200),
+        (520, 200),
+        (540, 200),
+        (480, 220),
+        (500, 220),
+        (520, 220),
+        (540, 220),
+        (480, 240),
+        (500, 240),
+        (520, 240),
+        (540, 240),
+        (100, 540),
+        (80, 540),
+        (60, 540),
+        (40, 540),
+        (100, 520),
+        (80, 520),
+        (60, 520),
+        (40, 520),
+        (100, 500),
+        (80, 500),
+        (60, 500),
+        (40, 500),
+        (100, 480),
+        (80, 480),
+        (60, 480),
+        (40, 480),
+        (680, 480),
+        (700, 480),
+        (720, 480),
+        (740, 480),
+        (680, 500),
+        (700, 500),
+        (720, 500),
+        (740, 500),
+        (680, 520),
+        (700, 520),
+        (720, 520),
+        (740, 520),
+        (680, 540),
+        (700, 540),
+        (720, 540),
+        (740, 540),
+        (380,40),
+        (400,40)
+      
+    ]
+    if easterCoords in interact_list_easter:
+      CanvaDeplacementEaster.delete('all')
+      ImageDeplacementE = PhotoImage(file="textures/deplacement/left_e.png")
+      CanvaDeplacementEaster.create_image(0,0, image=ImageDeplacementE, anchor=NW)
+      CanvaDeplacementEaster.pack()
+    else:
+      CanvaDeplacementEaster.delete('all')
+      CanvaDeplacementEaster.create_image(0,0, image=DeplacementImage, anchor=NW)
+      CanvaDeplacementEaster.pack()
+
+  def update_inventory():
+    global Inventory0, Inventory1, Inventory2, Inventory3, Inventory4, Inventory5, Inventory6, Inventory7, Inventory8
+    Inventory0 = PhotoImage(file="textures/inventory/Inventory0.png")
+    Inventory1 = PhotoImage(file="textures/inventory/Inventory1.png")
+    Inventory2 = PhotoImage(file="textures/inventory/Inventory2.png")
+    Inventory3 = PhotoImage(file="textures/inventory/Inventory3.png")
+    Inventory4 = PhotoImage(file="textures/inventory/Inventory4.png")
+    Inventory5 = PhotoImage(file="textures/inventory/Inventory5.png")
+    Inventory6 = PhotoImage(file="textures/inventory/Inventory6.png")
+    Inventory7 = PhotoImage(file="textures/inventory/Inventory7.png")
+    Inventory8 = PhotoImage(file="textures/inventory/Inventory8.png")
+    if (key_verbal_memory == False) and (key_number_memory == False) and (key_images_memory == False):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory0, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == False) and (key_images_memory == False):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory1, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == False) and (key_number_memory == True) and (key_images_memory == False):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory2, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == False) and (key_number_memory == False) and (key_images_memory == True):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory3, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == False) and (key_number_memory == True) and (key_images_memory == True):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory4, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == False) and (key_images_memory == True):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory5, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == True) and (key_images_memory == False):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory6, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == True) and (key_images_memory == True) and (trophy == False):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory7, anchor=NW)
+      CanvaInventory.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == True) and (key_images_memory == True) and (trophy == True):
+      CanvaInventory.delete('all')
+      CanvaInventory.create_image(0, 0, image=Inventory8, anchor=NW)
+      CanvaInventory.pack()
+
+  def update_inventory_easter():
+    global Inventory0, Inventory1, Inventory2, Inventory3, Inventory4, Inventory5, Inventory6, Inventory7, Inventory8
+    Inventory0 = PhotoImage(file="textures/inventory/Inventory0.png")
+    Inventory1 = PhotoImage(file="textures/inventory/Inventory1.png")
+    Inventory2 = PhotoImage(file="textures/inventory/Inventory2.png")
+    Inventory3 = PhotoImage(file="textures/inventory/Inventory3.png")
+    Inventory4 = PhotoImage(file="textures/inventory/Inventory4.png")
+    Inventory5 = PhotoImage(file="textures/inventory/Inventory5.png")
+    Inventory6 = PhotoImage(file="textures/inventory/Inventory6.png")
+    Inventory7 = PhotoImage(file="textures/inventory/Inventory7.png")
+    Inventory8 = PhotoImage(file="textures/inventory/Inventory8.png")
+    if (key_verbal_memory == False) and (key_number_memory == False) and (key_images_memory == False):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory0, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == False) and (key_images_memory == False):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory1, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == False) and (key_number_memory == True) and (key_images_memory == False):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory2, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == False) and (key_number_memory == False) and (key_images_memory == True):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory3, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == False) and (key_number_memory == True) and (key_images_memory == True):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory4, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == False) and (key_images_memory == True):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory5, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == True) and (key_images_memory == False):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory6, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == True) and (key_images_memory == True) and (trophy == False):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory7, anchor=NW)
+      CanvaInventoryEaster.pack()
+    elif (key_verbal_memory == True) and (key_number_memory == True) and (key_images_memory == True) and (trophy == True):
+      CanvaInventoryEaster.delete('all')
+      CanvaInventoryEaster.create_image(0, 0, image=Inventory8, anchor=NW)
+      CanvaInventoryEaster.pack()
+
+
   #FONCTION DE DEPLACEMENT
   def deplacement(event):
     #On définit en global les coordonnées du rectangle
@@ -1072,18 +1288,22 @@ def script():
     if touche == "Up" and coords[1] > 40:
         coords = (coords[0], coords[1] - 20)
         canva_tableau.coords(rectangle, coords[0], coords[1])
+        check_coords_cast()
     #Si la touche est la flèche du bas et que le sprite n'a pas déjà atteint le mur du bas, on descend de 20 pixels
     elif touche == "Down" and coords[1] < 540:
         coords = (coords[0], coords[1] + 20)
         canva_tableau.coords(rectangle, coords[0], coords[1])
+        check_coords_cast()
     #Si la touche est la flèche de droite et que le sprite n'a pas déjà atteint le mur de droite, on se déplace de 20 pixels à droite
     elif touche == "Right" and coords[0] < 740:
         coords = (coords[0] + 20, coords[1])
         canva_tableau.coords(rectangle, coords[0], coords[1])
+        check_coords_cast()
     #Si la touche est la flèche de gauche et que le sprite n'a pas déjà atteint le mur de gauche, on se déplace de 20 pixels à gauche
     elif touche == "Left" and coords[0] > 40:
         coords = (coords[0] - 20, coords[1])
         canva_tableau.coords(rectangle, coords[0], coords[1])
+        check_coords_cast()
 
     #Si la touche est "e", et que les coordonnées du sprite correspondent aux coordonnées des portes,
     #On appelle les différentes fonctions des jeux de mémoires et on remet les coordonnées à 0
@@ -1193,18 +1413,22 @@ def script():
       if touche == "Up" and easterCoords[1] > 40:
         easterCoords = (easterCoords[0], easterCoords[1] - 20)
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        check_coords_cast_easter()
       #Si la touche est la flèche du bas et que le sprite n'a pas déjà atteint le mur du bas, on descend de 20 pixels
       elif touche == "Down" and easterCoords[1] < 540:
         easterCoords = (easterCoords[0], easterCoords[1] + 20)
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        check_coords_cast_easter()
       #Si la touche est la flèche de droite et que le sprite n'a pas déjà atteint le mur de droite, on se déplace de 20 pixels à droite
       elif touche == "Right" and easterCoords[0] < 740:
         easterCoords = (easterCoords[0] + 20, easterCoords[1])
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        check_coords_cast_easter()
       #Si la touche est la flèche de gauche et que le sprite n'a pas déjà atteint le mur de gauche, on se déplace de 20 pixels à gauche
       elif touche == "Left" and easterCoords[0] > 40:
         easterCoords = (easterCoords[0] - 20, easterCoords[1])
         grid_easter.coords(rectangleEaster, easterCoords[0], easterCoords[1])
+        check_coords_cast_easter()
       elif touche == "e":
         if (easterCoords[0] == 400 and easterCoords[1] == 40) or (easterCoords[0] == 380 and easterCoords[1] == 40):
           easterFrame.destroy()
@@ -1264,23 +1488,55 @@ def script():
       
     #TKINTER SALLE EASTER EGGS#
     
-    global easterCoords, MapPixelArtEasterNoGaster, rectangleEaster, sprite
+    global easterCoords, MapPixelArtEasterNoGaster, rectangleEaster, sprite, CanvaDeplacementEaster, CanvaInventoryEaster
     easterCoords = (400,300)
 
     #On crée la fenêtre principale
     easterFrame = Tk()
     easterFrame.title("Easter Egg | Memory Game")
     easterFrame.geometry("800x600")
-    #On crée un tableau dans lequel le sprite se déplace
+
+    easterFrame.attributes("-fullscreen", True)
+
+    LeftFrame = Frame(easterFrame)
+    LeftFrame.pack(side=LEFT)
+
+    CanvaInventoryEaster = Canvas(LeftFrame, width=283, height=1535)
+    Inventory0 = PhotoImage(file="textures/inventory/Inventory0.png")
+    InventoryCastEaster  = CanvaInventoryEaster.create_image(0, 0, image=Inventory0, anchor=NW)
+    CanvaInventoryEaster.pack()
+
+    RightFrame = Frame(easterFrame)
+    RightFrame.pack(side=RIGHT)
+
+    CanvaDeplacementEaster = Canvas(RightFrame, width=283, height=1535)
+
+    global DeplacementImage
+
+    DeplacementImage = PhotoImage(file="textures/deplacement/left.png")
+    DeplacementCastEaster  = CanvaDeplacementEaster.create_image(0, 0, image=DeplacementImage, anchor=NW)
+    CanvaDeplacementEaster.pack()
+
     FrameGrid = Frame(easterFrame)
     FrameGrid.pack(side=TOP)
+
+    bottomFrame = Frame(easterFrame)
+    bottomFrame.pack(side=BOTTOM)
+
+    CanvaBottomEaster = Canvas(bottomFrame, width=800, height=168)
+    BottomImage = PhotoImage(file="textures/deplacement/bottom.png")
+    BottomEaster = CanvaBottomEaster.create_image(0,0, image=BottomImage, anchor=NW)
+    CanvaBottomEaster.pack()
+
+    #On crée un tableau dans lequel le sprite se déplace
+
     grid_easter = Canvas(FrameGrid, width=800, height=600)
 
     #On charge et importe les textures de la map
     MapPixelArtEaster = PhotoImage(file="textures/map_easter_gaster.png")
     MapPixelArtEasterNoGaster = PhotoImage(file="textures/map_easter.png")
     MapEasterGCast = grid_easter.create_image(0, 0, anchor=NW, image=MapPixelArtEaster)
-    
+
 
     #On charge et importe les textures du sprite
     sprite = PhotoImage(file="textures/sprite.png")
@@ -1293,7 +1549,7 @@ def script():
     grid_easter.pack()
 
 
-
+    update_inventory_easter()
     #On ouvre la fenêtre d'easter eggs
     easterFrame.mainloop()
 
@@ -1304,8 +1560,50 @@ def script():
   mainFrame.title("Memory Game | Thomas & Gabriel")
   mainFrame.geometry("800x600")
 
+  global MIReussiCanvaCle
+  MIReussiCanvaCle = PhotoImage(file="textures/cles/cle_images_memory.png")
+  global MVReussiCanvaCle
+  MVReussiCanvaCle = PhotoImage(file="textures/cles/cle_verbal_memory.png")
+  global MNReussiCanvaCle
+  MNReussiCanvaCle = PhotoImage(file="textures/cles/cle_number_memory.png")
+
+  mainFrame.attributes("-fullscreen", True)
+
+  LeftFrame = Frame(mainFrame)
+  LeftFrame.pack(side=LEFT)
+
+  CanvaInventory = Canvas(LeftFrame, width=283, height=1535)
+  Inventory0 = PhotoImage(file="textures/inventory/Inventory0.png")
+  InventoryCast  = CanvaInventory.create_image(0, 0, image=Inventory0, anchor=NW)
+  CanvaInventory.pack()
+
+  RightFrame = Frame(mainFrame)
+  RightFrame.pack(side=RIGHT)
+
+  CanvaDeplacement = Canvas(RightFrame, width=283, height=1535)
+  global DeplacementImage
+
+  DeplacementImage = PhotoImage(file="textures/deplacement/left.png")
+  DeplacementCast  = CanvaDeplacement.create_image(0, 0, image=DeplacementImage, anchor=NW)
+  CanvaDeplacement.pack()
+
+  tableauFrame = Frame(mainFrame)
+  tableauFrame.pack(side=TOP)
+
+  bottomFrame = Frame(mainFrame)
+  bottomFrame.pack(side=BOTTOM)
+
+  CanvaBottom = Canvas(bottomFrame, width=800, height=168)
+  BottomImage = PhotoImage(file="textures/deplacement/bottom.png")
+  Bottom = CanvaBottom.create_image(0,0, image=BottomImage, anchor=NW)
+  CanvaBottom.pack()
+
+
+
+
+
   #On crée un tableau dans lequel le sprite se déplace
-  canva_tableau = Canvas(mainFrame, width=800, height=600)
+  canva_tableau = Canvas(tableauFrame, width=800, height=600)
 
   #On charge et importe les textures de la map
   MapPixelArt = PhotoImage(file="textures/map_pixelart.png")
@@ -1332,6 +1630,13 @@ def script():
   canva_tableau.pack()
 
   #On ouvre la fenêtre pincipale
+  update_inventory()
+  print(
+    "verbal:", key_verbal_memory,
+    "\nnumber", key_number_memory,
+    "\nimages", key_images_memory
+  )
+
   mainFrame.mainloop()
 
 #FONCTION DU DEMARRAGE

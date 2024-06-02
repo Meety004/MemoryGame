@@ -91,7 +91,7 @@ def immagie(texte):
     return r
 
 
-####CORPS
+####CORPS DE GABOUBOUL
 A=int(input("0 pour encrypter, 1 pour décrypter:"))
 if A==0:
     x=str(input("Donnez le message à crypter:"))
