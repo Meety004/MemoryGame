@@ -1102,73 +1102,7 @@ def script():
   def check_coords_cast_easter():
     global easterCoords, DeplacementImage, ImageDeplacementE, CanvaDeplacementEaster
     interact_list_easter = [
-        (100, 120),
-        (120, 120),
-        (140, 120),
-        (160, 120),
-        (100, 140),
-        (120, 140),
-        (140, 140),
-        (160, 140),
-        (100, 160),
-        (120, 160),
-        (140, 160),
-        (160, 160),
-        (100, 180),
-        (120, 180),
-        (140, 180),
-        (160, 180),
-        (480, 180),
-        (500, 180),
-        (520, 180),
-        (540, 180),
-        (480, 200),
-        (500, 200),
-        (520, 200),
-        (540, 200),
-        (480, 220),
-        (500, 220),
-        (520, 220),
-        (540, 220),
-        (480, 240),
-        (500, 240),
-        (520, 240),
-        (540, 240),
-        (100, 540),
-        (80, 540),
-        (60, 540),
-        (40, 540),
-        (100, 520),
-        (80, 520),
-        (60, 520),
-        (40, 520),
-        (100, 500),
-        (80, 500),
-        (60, 500),
-        (40, 500),
-        (100, 480),
-        (80, 480),
-        (60, 480),
-        (40, 480),
-        (680, 480),
-        (700, 480),
-        (720, 480),
-        (740, 480),
-        (680, 500),
-        (700, 500),
-        (720, 500),
-        (740, 500),
-        (680, 520),
-        (700, 520),
-        (720, 520),
-        (740, 520),
-        (680, 540),
-        (700, 540),
-        (720, 540),
-        (740, 540),
-        (380,40),
-        (400,40)
-      
+        (100, 120),(120, 120),(140, 120),(160, 120),(100, 140),(120, 140),(140, 140),(160, 140), (100, 160),(120, 160),(140, 160),(160, 160),(100, 180),(120, 180),(140, 180),(160, 180),(480, 180),(500, 180),(520, 180),(540, 180),(480, 200),(500, 200),(520, 200),(540, 200),(480, 220),(500, 220),(520, 220),(540, 220),(480, 240),(500, 240),(520, 240),(540, 240),(100, 540),(80, 540),(60, 540),(40, 540),(100, 520),(80, 520),(60, 520),(40, 520),(100, 500),(80, 500),(60, 500),(40, 500),(100, 480),(80, 480),(60, 480),(40, 480),(680, 480),(700, 480),(720, 480),(740, 480),(680, 500),(700, 500),(720, 500),(740, 500),(680, 520),(700, 520),(720, 520),(740, 520),(680, 540),(700, 540),(720, 540),(740, 540),(380,40),(400,40)  
     ]
     if easterCoords in interact_list_easter:
       CanvaDeplacementEaster.delete('all')
@@ -1280,7 +1214,7 @@ def script():
   #FONCTION DE DEPLACEMENT
   def deplacement(event):
     #On définit en global les coordonnées du rectangle
-    global coords
+    global coords, ScrollImage
     #On définit la variable touche qui prend pour valeur la touche du clavier appuyée
     touche = event.keysym
 
@@ -1309,21 +1243,40 @@ def script():
     #On appelle les différentes fonctions des jeux de mémoires et on remet les coordonnées à 0
 
     elif touche == "e":
+        scroll_coords = [
+        (700,160),
+        (720,160),
+        (700,180),
+        (720,180),
+        ]
         if (coords[0] == 40 and coords[1] == 300) or (coords[0] == 40 and coords[1] == 280):
-            coords = (400,300)
-            mainFrame.destroy()
-            verbal_memory_start()
+          coords = (400,300)
+          mainFrame.destroy()
+          verbal_memory_start()
         elif (coords[0] == 740 and coords[1] == 300) or (coords[0] == 740 and coords[1] == 280):
-            coords = (400, 300)
-            mainFrame.destroy()
-            MN_start()
+          coords = (400, 300)
+          mainFrame.destroy()
+          MN_start()
         elif (coords[0] == 400 and coords[1] == 540) or (coords[0] == 380 and coords[1] == 540):
-            coords = (400, 300)
-            mainFrame.destroy()
-            images_memory_start()
+          coords = (400, 300)
+          mainFrame.destroy()
+          images_memory_start()
         elif (coords[0] == 400 and coords[1] == 40) or (coords[0] == 380 and coords[1] == 40):
-            coords = (400, 300)
-            MP_start()
+          coords = (400, 300)
+          MP_start()
+        elif (coords in scroll_coords):
+          def scroll_quit():
+            Scroll.destroy()
+          Scroll = Toplevel()
+          Scroll.title("Parchemin Mystérieux")
+          Scroll.geometry("300x350")
+          ScrollCanva = Canvas(Scroll, width=300, height=300)
+          ScrollImage = PhotoImage(file="textures/map_elements/scroll_poem.png")
+          ScrollCanva.create_image(0, 0, image=ScrollImage, anchor=NW)
+          ScrollCanva.pack(side=TOP)
+          ScrollBtn = Button(Scroll, text="OK", command=scroll_quit, background="aquamarine1")
+          ScrollBtn.pack(side=BOTTOM, pady=5)
+          Scroll.mainloop()
     elif (touche == "a") and (coords[0] == 740) and (coords[1] == 40):
       coords = (400,300)
       mainFrame.destroy()
@@ -1485,7 +1438,10 @@ def script():
         
           
         
-      
+    #FONCTION POUR QUITTER LE MODE PLEIN ECRAN DE LA FENETRE D'EASTER EGG
+    def escape_easter():
+      easterFrame.destroy()
+
     #TKINTER SALLE EASTER EGGS#
     
     global easterCoords, MapPixelArtEasterNoGaster, rectangleEaster, sprite, CanvaDeplacementEaster, CanvaInventoryEaster
@@ -1523,10 +1479,13 @@ def script():
     bottomFrame = Frame(easterFrame)
     bottomFrame.pack(side=BOTTOM)
 
-    CanvaBottomEaster = Canvas(bottomFrame, width=800, height=168)
+    EscapeBtn = Button(bottomFrame, text="QUITTER LE JEU", background="red1", command=escape_easter)
+    EscapeBtn.pack(side=TOP)
+
+    CanvaBottomEaster = Canvas(bottomFrame, width=800, height=135)
     BottomImage = PhotoImage(file="textures/deplacement/bottom.png")
     BottomEaster = CanvaBottomEaster.create_image(0,0, image=BottomImage, anchor=NW)
-    CanvaBottomEaster.pack()
+    CanvaBottomEaster.pack(side=BOTTOM)
 
     #On crée un tableau dans lequel le sprite se déplace
 
@@ -1555,17 +1514,17 @@ def script():
 
   #TKINTER SALLE PRINCIPALE#
 
+  #FONCTION POUR QUITTER LE MODE PLEIN ECRAN
+  def escape():
+    mainFrame.destroy()
+  
+
+
+
   #On crée la fenêtre principale
   mainFrame = Tk()
   mainFrame.title("Memory Game | Thomas & Gabriel")
   mainFrame.geometry("800x600")
-
-  global MIReussiCanvaCle
-  MIReussiCanvaCle = PhotoImage(file="textures/cles/cle_images_memory.png")
-  global MVReussiCanvaCle
-  MVReussiCanvaCle = PhotoImage(file="textures/cles/cle_verbal_memory.png")
-  global MNReussiCanvaCle
-  MNReussiCanvaCle = PhotoImage(file="textures/cles/cle_number_memory.png")
 
   mainFrame.attributes("-fullscreen", True)
 
@@ -1593,13 +1552,13 @@ def script():
   bottomFrame = Frame(mainFrame)
   bottomFrame.pack(side=BOTTOM)
 
-  CanvaBottom = Canvas(bottomFrame, width=800, height=168)
+  EscapeBtn = Button(bottomFrame, text="QUITTER LE JEU", background="red1", command=escape)
+  EscapeBtn.pack(side=TOP)
+
+  CanvaBottom = Canvas(bottomFrame, width=800, height=135)
   BottomImage = PhotoImage(file="textures/deplacement/bottom.png")
   Bottom = CanvaBottom.create_image(0,0, image=BottomImage, anchor=NW)
-  CanvaBottom.pack()
-
-
-
+  CanvaBottom.pack(side=BOTTOM)
 
 
   #On crée un tableau dans lequel le sprite se déplace
@@ -1631,12 +1590,6 @@ def script():
 
   #On ouvre la fenêtre pincipale
   update_inventory()
-  print(
-    "verbal:", key_verbal_memory,
-    "\nnumber", key_number_memory,
-    "\nimages", key_images_memory
-  )
-
   mainFrame.mainloop()
 
 #FONCTION DU DEMARRAGE
@@ -1771,7 +1724,7 @@ def startGame():
   #On crée la fenêtre et les différents éléments du menu de démarrage du jeu
   StartFenetre = Tk()
   StartFenetre.title("Memory Game | Thomas & Gabriel")
-  StartFenetre.geometry("750x400")
+  StartFenetre.geometry("750x600")
 
   StartTitleFrame = Frame(StartFenetre, borderwidth=1, relief=GROOVE)
   StartTitleFrame.pack(side=TOP,padx=10, pady=10)
@@ -1779,6 +1732,11 @@ def startGame():
   StartTitleLabel.pack(side=TOP)
   StartSubtitleLabel = Label(StartTitleFrame, text="Un jeu par Thomas KELEMEN et Gabriel CADEAU-FLAUJAT", font=("Arial", 15))
   StartSubtitleLabel.pack(side=TOP)
+
+  CanvaImageTitle = Canvas(StartFenetre, width=320, height=180)
+  memorygameImage = PhotoImage(file="textures/memorygame.png")
+  CanvaImageTitle.create_image(0, 0, image=memorygameImage, anchor=NW)
+  CanvaImageTitle.pack(side=TOP, pady=5)
 
   LicenseLabel = Label(StartFenetre, text="Memory Game, Thomas KELEMEN & Gabriel CADEAU-FLAUJAT \n © Tous droits réservés. 2024 ")
   LicenseLabel.pack(side=BOTTOM)
