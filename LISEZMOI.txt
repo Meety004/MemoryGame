@@ -100,3 +100,10 @@ L'aspect graphique du jeu a été assuré par al librairie Tkinter, native à Py
 Ce jeu est destiné à un usage personnel et scolaire et non commercial. Vous pouvez le partager avec des amis et des proches, mais toute distribution à des fins commerciales est strictement interdite sans autorisation préalable de la part des créateurs du jeu.
 En utilisant ce jeu, vous acceptez de vous conformer à toutes les lois et réglementations en vigueur en France concernant les droits d'auteur, la propriété intellectuelle et toute autre loi applicable.
 Ce jeu, y compris tous ses éléments graphiques, sonores, et textuels, est protégé par les lois internationales sur les droits d'auteur. Les contrevenants s'exposent à des poursuites judiciaires et à des sanctions civiles et pénales.
+
+#####################
+
+# LANCEMENT DU JEU #
+Pour jouer, vous devez simplement executer le fichier 'memory.game.exe' et la fenetre de jeu s'ouvrira.
+
+#####################
