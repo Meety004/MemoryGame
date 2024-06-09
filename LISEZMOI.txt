@@ -41,13 +41,13 @@ Dans cette version, vous aurez besoin d'un petit nombre de points pour compléte
 	-Mémoire Verbale: 25 Points
 	-Mémoire des Images: 25 Points
 	-Mémoire des Nombres: 7 Points
-	-Mémoire de Patterns: 10
+	-Mémoire de Patterns: 10 Points
 
 -Mode Difficile:
 Dans cette version, vous aurez besoin d'un grand nombre de points pour compléter chaque mini-jeu:
 	-Mémoire Verbale: 50 Points
 	-Mémoire des Images: 50 Points
-	-Mémoire des Nombres: 12 Points
+	-Mémoire des Nombres: 10 Points
 	-Mémoire de Patterns: 15 Points
 
 #####################
@@ -94,7 +94,7 @@ Merci à Quentin PLADEAU, qui a aidé sur l'aspect programmation du projet.
 
 # INFORMATIONS SUPPLEMENTAIRES #
 'Memory Game' est un jeu programmé entièremment dans le language de programmation Python.
-L'aspect graphique du jeu a été assuré par al librairie Tkinter, native à Python
+L'aspect graphique du jeu a été assuré par la librairie Tkinter, native à Python
 
 #####################
 
@@ -106,7 +106,8 @@ Ce jeu, y compris tous ses éléments graphiques, sonores, et textuels, est prot
 #####################
 
 # LANCEMENT DU JEU #
-Pour jouer, vous devez simplement glisser les dossiers "textures" et "ressources" sur votre ordinateur.
-Vous devez ensuite éxécuter le fichier "memorygame.exe" qui ouvrira la fenetre de jeu sur votre ordinateur.
+Pour jouer, vous devez simplement glisser les dossiers "textures" et "ressources" ainsi que le fichier application "Memory Game" sur votre ordinateur, dans le même dossier.
+Vous devez ensuite éxécuter le fichier "Memory Game" qui ouvrira la fenetre de jeu sur votre ordinateur.
+Amusez vous bien !
 
 #####################

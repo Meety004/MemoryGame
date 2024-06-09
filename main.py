@@ -249,12 +249,16 @@ def script():
 
     #Affiches les règles de la mémoire verbale dans une nouvellle fenêtre
     def MVreglesPrint():
+      global difficulte
       def MVregles_quit():
         MVregles.destroy()
       MVregles = Tk()
       MVregles.title("Règles | Mémoire Verbale")
-      MVregles.geometry("250x200")
-      MVreglesText = Label(MVregles, text="Bienvenue dans le jeu Mémoire Verbale \n Les règles de ce jeu sont simples: \n Vous devez indiquer si vous avez déjà \n vu le mot qui apparait grâce \n aux boutons 'Déjà Vu' et \n 'Nouveau Mot'. Vous devez obtenir \n 50 poits pour récupérer la \n clé de l'épreuve. \n Vous pouvez obtenir un \n Bonne chance !")
+      MVregles.geometry("250x250")
+      if difficulte == True:
+        MVreglesText = Label(MVregles, text="Bienvenue dans le jeu Mémoire Verbale \n Les règles de ce jeu sont simples: \n Vous devez indiquer si vous avez déjà \n vu le mot qui apparait grâce \n aux boutons 'Déjà Vu' et \n 'Nouveau Mot'. Vous devez obtenir \n 50 points pour récupérer la \n clé de l'épreuve. \n Vous pouvez obtenir un \n\n Bonne chance !")
+      else:
+        MVreglesText = Label(MVregles, text="Bienvenue dans le jeu Mémoire Verbale \n Les règles de ce jeu sont simples: \n Vous devez indiquer si vous avez déjà \n vu le mot qui apparait grâce \n aux boutons 'Déjà Vu' et \n 'Nouveau Mot'. Vous devez obtenir \n 25 points pour récupérer la \n clé de l'épreuve. \n Vous pouvez obtenir un \n\n Bonne chance !")
       MVreglesText.pack(side=TOP, padx=10, pady=10)
       MVreglesButton = Button(MVregles, text="OK", command=MVregles_quit, background="aquamarine1")
       MVreglesButton.pack(side=BOTTOM, padx=10, pady=10)
@@ -574,13 +578,17 @@ def script():
 
     #Affiches les règles de la mémoire des images dans une nouvellle fenêtre
     def MIreglesPrint():
+      global difficulte
       def MIregles_quit():
         MIregles.destroy()
       MIregles = Tk()
       MIregles.title("Règles | Mémoire des Images")
-      MIregles.geometry("250x200")
+      MIregles.geometry("250x250")
 
-      MIreglesText = Label(MIregles, text="Bienvenue dans le jeu Mémoire des Images \n Les règles de ce jeu sont simples: \n Vous devez indiquer si vous avez déjà \n vu l'image qui apparait grâce \n aux boutons 'Déjà Vu' et \n 'Nouvelle Image'. Vous devez obtenir \n 50 poits pour récupérer la \n clé de l'épreuve.\n Bonne chance !")
+      if difficulte == True:
+        MIreglesText = Label(MIregles, text="Bienvenue dans le jeu Mémoire des Images \n Les règles de ce jeu sont simples: \n Vous devez indiquer si vous avez déjà \n vu l'image qui apparait grâce \n aux boutons 'Déjà Vu' et \n 'Nouvelle Image'. Vous devez obtenir \n 50 points pour récupérer la \n clé de l'épreuve.\n\n Bonne chance !")
+      else:
+        MIreglesText = Label(MIregles, text="Bienvenue dans le jeu Mémoire des Images \n Les règles de ce jeu sont simples: \n Vous devez indiquer si vous avez déjà \n vu l'image qui apparait grâce \n aux boutons 'Déjà Vu' et \n 'Nouvelle Image'. Vous devez obtenir \n 25 points pour récupérer la \n clé de l'épreuve.\n\n Bonne chance !")
       MIreglesText.pack(side=TOP, padx=10, pady=10)
 
       MIreglesButton = Button(MIregles, text="OK", command=MIregles_quit, background="aquamarine1")
@@ -862,12 +870,16 @@ def script():
 
     #Affichage des règles
     def MNregles():
+      global difficulte
       def MNregles_quit():
         MNregles.destroy()
       MNregles = Tk()
       MNregles.title("Règles | Mémoire des Nombres")
-      MNregles.geometry("250x200")
-      MNreglesText = Label(MNregles, text="Bienvenue dans le jeu Mémoire \n des Nombres \n Les règles de ce jeu sont simples: \n On vous affiche un nombre, \n vous devez réécrire le nombre. \n Le nombre de chiffres \n augmente à chaque bonne réponse. \n Une seule mauvaise réponse et \nvous avez perdu! \n Vous devez avoir \n 10 points pour avoir la clé. \n Bonne chance !")
+      MNregles.geometry("250x250")
+      if difficulte == True:
+        MNreglesText = Label(MNregles, text="Bienvenue dans le jeu Mémoire \n des Nombres \n Les règles de ce jeu sont simples: \n On vous affiche un nombre, \n vous devez réécrire le nombre. \n Le nombre de chiffres \n augmente à chaque bonne réponse. \n Une seule mauvaise réponse et \nvous avez perdu! \n Vous devez avoir \n 10 points pour avoir la clé. \n\n Bonne chance !")
+      else:
+        MNreglesText = Label(MNregles, text="Bienvenue dans le jeu Mémoire \n des Nombres \n Les règles de ce jeu sont simples: \n On vous affiche un nombre, \n vous devez réécrire le nombre. \n Le nombre de chiffres \n augmente à chaque bonne réponse. \n Une seule mauvaise réponse et \nvous avez perdu! \n Vous devez avoir \n 7 points pour avoir la clé. \n\n Bonne chance !")
       MNreglesText.pack(side=TOP, padx=10, pady=10)
       MNreglesButton = Button(MNregles, text="OK", command=MNregles_quit, background="aquamarine1")
       MNreglesButton.pack(side=BOTTOM, padx=10, pady=10)
@@ -1120,12 +1132,16 @@ def script():
             pattern_memory_hint()
 
       def MPreglesPrint():
+        global difficulte
         def MPregles_quit():
           MPregles.destroy()
         MPregles = Tk()
         MPregles.title("Règles | Mémoire de Pattern")
-        MPregles.geometry("250x200")
-        MPreglesText = Label(MPregles, text="Bienvenue dans le jeu Mémoire \n des Pattern \n Les règles de ce jeu sont simples: \n Il y a 9 carrés, \n l'un d'eux s'allume et \n vous devez réappuyer sur celui-cî. \n Puis il se rallume, suivi d'un deuxième, \n Vous devez appuyer sur ces carrés \n dans leur odre d'apparition. \n Une seule mauvaise réponse et \nvous avez perdu! \n Vous devez avoir 15 \n  points pour avoir le trophée. \n Bonne chance !")
+        MPregles.geometry("250x250")
+        if difficulte == True:
+          MPreglesText = Label(MPregles, text="Bienvenue dans le jeu Mémoire \n des Patterns \n Les règles de ce jeu sont simples: \n Il y a 9 carrés, \n l'un d'eux s'allume et \n vous devez réappuyer sur celui-cî. \n Puis il se rallume, suivi d'un deuxième, \n Vous devez appuyer sur ces carrés \n dans leur odre d'apparition. \n Une seule mauvaise réponse et \nvous avez perdu! \n Vous devez avoir 15 \n  points pour avoir le trophée. \n\n Bonne chance !")
+        else:
+          MPreglesText = Label(MPregles, text="Bienvenue dans le jeu Mémoire \n des Patterns \n Les règles de ce jeu sont simples: \n Il y a 9 carrés, \n l'un d'eux s'allume et \n vous devez réappuyer sur celui-cî. \n Puis il se rallume, suivi d'un deuxième, \n Vous devez appuyer sur ces carrés \n dans leur odre d'apparition. \n Une seule mauvaise réponse et \nvous avez perdu! \n Vous devez avoir 10 \n  points pour avoir le trophée. \n\n Bonne chance !")
         MPreglesText.pack(side=TOP, padx=10, pady=10)
         MPreglesButton = Button(MPregles, text="OK", command=MPregles_quit, background="aquamarine1")
         MPreglesButton.pack(side=BOTTOM, padx=10, pady=10)
