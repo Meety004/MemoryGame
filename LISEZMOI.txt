@@ -106,7 +106,8 @@ Ce jeu, y compris tous ses éléments graphiques, sonores, et textuels, est prot
 #####################
 
 # LANCEMENT DU JEU #
-Pour jouer, vous devez simplement glisser les dossiers "textures" et "ressources" ainsi que le fichier application "Memory Game" sur votre ordinateur, dans le même dossier.
+Pour jouez, glissez le dossier "Memory Game" sur votre ordinateur, puis cliquez sur "Extraire Tout".
+Assurez vous que les dossiers "ressources" et "textures" se trouvent bien dans le même dossier que l'application "Memory Game".
 Vous devez ensuite éxécuter le fichier "Memory Game" qui ouvrira la fenetre de jeu sur votre ordinateur.
 Amusez vous bien !
 
