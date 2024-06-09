@@ -40,13 +40,15 @@ Il existe deux difficultés dans le jeu Memory Game:
 Dans cette version, vous aurez besoin d'un petit nombre de points pour compléter chaque mini-jeu:
 	-Mémoire Verbale: 25 Points
 	-Mémoire des Images: 25 Points
-	-Mémoire de Patterns: 7 Points
+	-Mémoire des Nombres: 7 Points
+	-Mémoire de Patterns: 10
 
 -Mode Difficile:
 Dans cette version, vous aurez besoin d'un grand nombre de points pour compléter chaque mini-jeu:
 	-Mémoire Verbale: 50 Points
 	-Mémoire des Images: 50 Points
-	-Mémoire de Patterns: 12 Points
+	-Mémoire des Nombres: 12 Points
+	-Mémoire de Patterns: 15 Points
 
 #####################
 
@@ -104,6 +106,7 @@ Ce jeu, y compris tous ses éléments graphiques, sonores, et textuels, est prot
 #####################
 
 # LANCEMENT DU JEU #
-Pour jouer, vous devez simplement executer le fichier 'memory.game.exe' et la fenetre de jeu s'ouvrira.
+Pour jouer, vous devez simplement glisser les dossiers "textures" et "ressources" sur votre ordinateur.
+Vous devez ensuite éxécuter le fichier "memorygame.exe" qui ouvrira la fenetre de jeu sur votre ordinateur.
 
 #####################

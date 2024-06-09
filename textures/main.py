@@ -11,9 +11,9 @@ global key_images_memory
 global key_number_memory
 global trophy
 
-key_verbal_memory = False 
-key_images_memory = False 
-key_number_memory = False 
+key_verbal_memory = False
+key_images_memory = False
+key_number_memory = False
 trophy = False
 
 #On crée les variables des meilleurs scores de chaque salle et on les met à zéro
@@ -984,6 +984,7 @@ def script():
 
     #Si le joueur possède les trois clés, on lance le jeu des mémoires MP
     if (key_images_memory == True) and (key_number_memory == True) and (key_verbal_memory == True):
+      mainFrame.destroy()
 
       def restart_mp():
 
@@ -1012,13 +1013,12 @@ def script():
         if difficulte == True:
 
           if score >= 15:
-            MPRestartFrame.geometry("850x850")
             MPWinLab = Label(MPRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
             MPWinLab.pack(side=TOP)
             MPWinLabSubLab = Label(MPRestartMainFrame, text=(f"Votre meilleur score est {MPHighestScore.get()} !\n Vous obtenez la clé de la Mémoire de pattern!"), font=("Arial", 10))
             MPWinLabSubLab.pack(side=TOP, pady=30)
             trophée = PhotoImage(file="textures/cles/trophy.png")
-            CanvaTrophy = Canvas(MPRestartMainFrame, width=500, height=500)
+            CanvaTrophy = Canvas(MPRestartMainFrame, width=80, height=80)
             CanvaTrophy.pack(side=TOP)
             CanvaTrophy.create_image(0, 0, anchor=NW, image=trophée)
             CanvaTrophy.image = trophée
@@ -1028,19 +1028,18 @@ def script():
             MPLoseLab.pack(side=TOP)
             diff = (15 - score)
             if diff > 1:
-              MVLoseLabSubLab = Label(MPRestartMainFrame, text=(f"Votre meilleur score est {MPHighestScore.get()} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir le trophée de Mémoire de pattern"), font=("Arial", 10))
+              MVLoseLabSubLab = Label(MPRestartMainFrame, text=(f"Votre meilleur score est {MPHighestScore.get()} !\n Encore un petit effort, il vous manquait\n {diff} points pour obtenir la clé de Mémoire de pattern"), font=("Arial", 10))
             else:
-              MVLoseLabSubLab = Label(MPRestartMainFrame, text=(f"Votre meilleur score est {MPHighestScore.get()} !\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir le trophée de Mémoire de pattern"), font=("Arial", 10))
+              MVLoseLabSubLab = Label(MPRestartMainFrame, text=(f"Votre meilleur score est {MPHighestScore.get()} !\n Encore un petit effort, il vous manquait\n {diff} point pour obtenir la clé de Mémoire de pattern"), font=("Arial", 10))
             MVLoseLabSubLab.pack(side=TOP, pady=30)
         else:
           if score >= 10:
-            MPRestartFrame.geometry("850x850")
             MPWinLab = Label(MPRestartMainFrame, text=(f"Vous avez gagné ! \n Votre score est de {score}."), font=("Arial", 15))
             MPWinLab.pack(side=TOP)
-            MPWinLabSubLab = Label(MPRestartMainFrame, text=(f"Votre meilleur score est {MPHighestScore.get()} !\n Vous obtenez le trophée de la Mémoire de pattern !"), font=("Arial", 10))
-            MPWinLabSubLab.pack(side=TOP, pady=5)
+            MPWinLabSubLab = Label(MPRestartMainFrame, text=(f"Votre meilleur score est {MPHighestScore.get()} !\n Vous obtenez la clé de la Mémoire de pattern !"), font=("Arial", 10))
+            MPWinLabSubLab.pack(side=TOP, pady=30)
             trophée = PhotoImage(file="textures/cles/trophy.png")
-            CanvaTrophy = Canvas(MPRestartMainFrame, width=500, height=500)
+            CanvaTrophy = Canvas(MPRestartMainFrame, width=80, height=80)
             CanvaTrophy.pack(side=TOP)
             CanvaTrophy.create_image(0, 0, anchor=NW, image=trophée)
             CanvaTrophy.image = trophée
@@ -1056,7 +1055,7 @@ def script():
             MVLoseLabSubLab.pack(side=TOP, pady=30)
 
         MPRestartButtons = Frame(MPRestartFrame, relief=GROOVE)
-        MPRestartButtons.pack(side=TOP)
+        MPRestartButtons.pack(side=TOP, pady=10)
         MPRestartButton = Button(MPRestartButtons, text="Recommencer", command=mprestart, background="aquamarine1")
         MPRestartButton.pack(side=LEFT, padx=20, pady=10)
         MPQuitButton = Button(MPRestartButtons, text="Quitter", command=mp_quit, background="aquamarine1")
@@ -1067,9 +1066,6 @@ def script():
         #Fonction pour quitter la fenêtre d'indice
         def mpindice_quit():
           MPIndice.destroy()
-          global boubou
-          boubou = False
-          MPjeu()
 
         MPIndice = Tk()
         MPIndice.title("INDICE N°4 |Mémoire de Pattern")
@@ -1081,7 +1077,7 @@ def script():
         else:
           MPIndiceText = Label(MPIndiceMainFrame, text="Bravo pour avoir atteint 15 points dans le jeu de mémoire de pattern,\n voici un indice pour accéder a une salle secrète:") 
         MPIndiceText.pack(side=TOP, padx=5)
-        MPIndiceIndice = Label(MPIndiceMainFrame, text="... qeprn zgjgovxwqdsfx dUq")
+        MPIndiceIndice = Label(MPIndiceMainFrame, text="... imtyamahl ggcjqlsdfcaphxu dbfgijo ...")
         MPIndiceIndice.pack(side=BOTTOM, padx=5, pady= 10)
         MPIndiceButton = Button(MPIndice, text="Quitter", command=mpindice_quit, background="aquamarine1")
         MPIndiceButton.pack(side=BOTTOM)
@@ -1091,9 +1087,6 @@ def script():
         #Fonction pour quitter la fenêtre d'annonce de victoire
         def mpreussi_quit():
           MPReussi.destroy()
-          global boubou
-          boubou = False
-          MPjeu()
 
         MPReussi = Tk()
         MPReussi.title("Réussite | Mémoire de Pattern")
@@ -1250,20 +1243,19 @@ def script():
       def MPjeu():
           global ez
           global boubou
-          global mpplay
           if boubou==False:
-              MPdebutBTN.pack_forget()
+              MPdebutBTN.destroy()
               ez = False
               global itérateur
               itérateur = 0
               global liste_bons
               liste_bons.append(random.randint(1, 9))
-              mpplay = False
               affichage()
           else:
               global baba
               baba = 0
-              mpplay = True
+              global mpplay
+              mpplay = TRUE
               if ez == True:
                   boubou = False
                   MPjeu()
@@ -1357,7 +1349,7 @@ def script():
       MPdebutBTN = Button(MPFrame, text='Commencer', command=MPjeu, background='aquamarine1')
       MPdebutBTN.pack(pady=20)
 
-      MPcontinuerBTN = Button(MPFrame, text="Continuer", command=continuer, background="aquamarine1")
+      MPcontinuerBTN = Button(MPFrame, text="continuer", command=continuer, background="aquamarine1")
 
       def check1(event):
           MPbind(1)
@@ -1394,7 +1386,6 @@ def script():
       #Fonction qui ferme la fenêtre d'erreur
       def error_quit():
         Error.destroy()
-        script()
       Error = Tk()
       
       IntMVHighestScore = IntVar(Error)
@@ -1480,7 +1471,22 @@ def script():
   def check_coords_cast():
     global coords, DeplacementImage, ImageDeplacementE
     interact_list = [
-      (40,300),(40,280),(740,300),(740,280),(400,540),(380,540),(400,40),(380,40),(700,160),(720,160),(700,180),(720,180),(40,40),(40,60),(60,40),(60,60)
+      (40,300),
+      (40,280),
+      (740,300),
+      (740,280),
+      (400,540),
+      (380,540),
+      (400,40),
+      (380,40),
+      (700,160),
+      (720,160),
+      (700,180),
+      (720,180),
+      (40,40),
+      (40,60),
+      (60,40),
+      (60,60)
     ]
     if coords in interact_list:
       CanvaDeplacement.delete('all')
@@ -1494,9 +1500,77 @@ def script():
 
   #FONCTION POUR GERER L'AFFICHAGE DES ELEMENTS A DROITE DE LA FENETRE D'EASTER EGG
   def check_coords_cast_easter():
-    global easterCoords, DeplacementImage, ImageDeplacementE, CanvaDeplacementEaster, Gaster
-    interact_list_easter = [(100, 120),(120, 120),(140, 120),(160, 120),(100, 140),(120, 140),(140, 140),(160, 140),(100, 160),(120, 160),(140, 160),(160, 160),(100, 180),(120, 180),(140, 180),(160, 180),(480, 180),(500, 180),(520, 180),(540, 180),(480, 200),(500, 200),(520, 200),(540, 200),(480, 220),(500, 220),(520, 220),(540, 220),(480, 240),(500, 240),(520, 240),(540, 240),(100, 540),(80, 540),(60, 540),(40, 540),(100, 520),(80, 520),(60, 520),(40, 520),(100, 500),(80, 500),(60, 500),(40, 500),(100, 480),(80, 480),(60, 480),(40, 480),(680, 480),(700, 480),(720, 480),(740, 480),(680, 500),(700, 500),(720, 500),(740, 500),(680, 520),(700, 520),(720, 520),(740, 520),(680, 540),(700, 540),(720, 540),(740, 540),(380,40),(400,40)]
-    if (easterCoords in interact_list_easter) and Gaster == True:
+    global easterCoords, DeplacementImage, ImageDeplacementE, CanvaDeplacementEaster
+    interact_list_easter = [
+        (100, 120),
+        (120, 120),
+        (140, 120),
+        (160, 120),
+        (100, 140),
+        (120, 140),
+        (140, 140),
+        (160, 140),
+        (100, 160),
+        (120, 160),
+        (140, 160),
+        (160, 160),
+        (100, 180),
+        (120, 180),
+        (140, 180),
+        (160, 180),
+        (480, 180),
+        (500, 180),
+        (520, 180),
+        (540, 180),
+        (480, 200),
+        (500, 200),
+        (520, 200),
+        (540, 200),
+        (480, 220),
+        (500, 220),
+        (520, 220),
+        (540, 220),
+        (480, 240),
+        (500, 240),
+        (520, 240),
+        (540, 240),
+        (100, 540),
+        (80, 540),
+        (60, 540),
+        (40, 540),
+        (100, 520),
+        (80, 520),
+        (60, 520),
+        (40, 520),
+        (100, 500),
+        (80, 500),
+        (60, 500),
+        (40, 500),
+        (100, 480),
+        (80, 480),
+        (60, 480),
+        (40, 480),
+        (680, 480),
+        (700, 480),
+        (720, 480),
+        (740, 480),
+        (680, 500),
+        (700, 500),
+        (720, 500),
+        (740, 500),
+        (680, 520),
+        (700, 520),
+        (720, 520),
+        (740, 520),
+        (680, 540),
+        (700, 540),
+        (720, 540),
+        (740, 540),
+        (380,40),
+        (400,40)
+      
+    ]
+    if easterCoords in interact_list_easter:
       CanvaDeplacementEaster.delete('all')
       ImageDeplacementE = PhotoImage(file="textures/deplacement/left_e.png")
       CanvaDeplacementEaster.create_image(0,0, image=ImageDeplacementE, anchor=NW)
@@ -1611,7 +1685,6 @@ def script():
     touche = event.keysym
 
     ordi_coords = [(40, 40), (60, 40), (40, 60), (60, 60)]
-    scroll_coords = [(700,160), (720,160), (700,180), (720,180)]
 
     #Si la touche est la flèche du haut et que le sprite n'a pas déjà atteint le mur du haut, on monte de 20 pixels
     if touche == "Up" and coords[1] > 40:
@@ -1652,23 +1725,9 @@ def script():
             images_memory_start()
         elif (coords[0] == 400 and coords[1] == 40) or (coords[0] == 380 and coords[1] == 40):
             coords = (400, 300)
-            mainFrame.destroy()
             MP_start()
         elif coords in ordi_coords:
           ordi()
-        elif (coords in scroll_coords):
-          def scroll_quit():
-            Scroll.destroy()
-          Scroll = Toplevel()
-          Scroll.title("Parchemin Mystérieux")
-          Scroll.geometry("300x350")
-          ScrollCanva = Canvas(Scroll, width=300, height=300)
-          ScrollImage = PhotoImage(file="textures/map_elements/scroll_poem.png")
-          ScrollCanva.create_image(0, 0, image=ScrollImage, anchor=NW)
-          ScrollCanva.pack(side=TOP)
-          ScrollBtn = Button(Scroll, text="OK", command=scroll_quit, background="aquamarine1")
-          ScrollBtn.pack(side=BOTTOM, pady=5)
-          Scroll.mainloop()
     elif (touche == "a") and (coords[0] == 740) and (coords[1] == 40):
       coords = (400,300)
       mainFrame.destroy()
@@ -1709,6 +1768,7 @@ def script():
               e = caractère
         if error == True:
           message = "La chaine de caractère n'est pas conforme à cause du caractère " + e
+        result.set(r)
         return message
 
       texte = ordi_entry.get()
@@ -1721,49 +1781,102 @@ def script():
           i=i+2
       result.set(r)
 
-    def ordi_quit():
-      ordiFrame.destroy()
-
-    ordiFrame = Toplevel()
+    ordiFrame = Tk()
     result = StringVar(ordiFrame)
 
-    ordiFrame.title("Ordinateur")
-    ordiFrame.geometry("550x500")
-
-    CanvaOrdi = Canvas(ordiFrame, width=300, height=300)
-    OrdiOpen = PhotoImage(file="textures/map_elements/computer_background.png")
-    CanvaOrdi.create_image(0, 0, image=OrdiOpen, anchor=NW)
-    CanvaOrdi.pack(side=TOP, pady=5)
+    ordiFrame.title("Odinateur")
+    ordiFrame.geometry("600x500")
 
     Frameinfos = Frame(ordiFrame, relief=GROOVE)
-    Frameinfos.pack(side=TOP)
+    Frameinfos.pack()
     resultlabel = Label(Frameinfos, textvariable=result, font=("Arial", 10))
-    resultlabel.pack(side=TOP)
+    resultlabel.pack()
     entryFrame = Frame(ordiFrame, relief=GROOVE)
-    entryFrame.pack(side=TOP, pady=5)
-    submitbutton = Button(entryFrame, text="Entrer", command=submit, background="aquamarine1", font=("Arial", 10))
-    submitbutton.pack(pady=10)
+    entryFrame.pack(side=BOTTOM, pady=100)
     ordi_entry = Entry(entryFrame, width=15)
     ordi_entry.pack()
-
-
-    quitButton = Button(entryFrame, text="QUITTER", command=ordi_quit, background="aquamarine1")
-    quitButton.pack(side=BOTTOM, pady=10)
-
+    submitbutton = Button(entryFrame, text="Submit", command=submit, background="aquamarine1", font=("Arial", 10))
+    submitbutton.pack(pady=20)
 
     ordiFrame.mainloop()
 
   def easter_egg():
-    global Gaster
-    Gaster = True
 
     def deplacementEaster(event):
-      global easterCoords, MapPixelArtEasterNoGaster, rectangleEaster, Gaster
+      global easterCoords, MapPixelArtEasterNoGaster, rectangleEaster
 
-      linkCoords = [(100, 120),(120, 120),(140, 120),(160, 120),(100, 140),(120, 140),(140, 140),(160, 140),(100, 160),(120, 160),(140, 160),(160, 160),(100, 180),(120, 180),(140, 180),(160, 180)]
-      pacmanCoords = [(480, 180),(500, 180),(520, 180),(540, 180),(480, 200),(500, 200),(520, 200),(540, 200),(480, 220),(500, 220),(520, 220),(540, 220),(480, 240),(500, 240),(520, 240),(540, 240)]
-      marioCoords =  [(100, 540),(80, 540),(60, 540),(40, 540),(100, 520),(80, 520),(60, 520),(40, 520),(100, 500),(80, 500),(60, 500),(40, 500),(100, 480),(80, 480),(60, 480),(40, 480)]
-      gasterCoords = [(680, 480),(700, 480),(720, 480),(740, 480),(680, 500),(700, 500),(720, 500),(740, 500),(680, 520),(700, 520),(720, 520),(740, 520),(680, 540),(700, 540),(720, 540),(740, 540)]
+      linkCoords = [
+        (100, 120),
+        (120, 120),
+        (140, 120),
+        (160, 120),
+        (100, 140),
+        (120, 140),
+        (140, 140),
+        (160, 140),
+        (100, 160),
+        (120, 160),
+        (140, 160),
+        (160, 160),
+        (100, 180),
+        (120, 180),
+        (140, 180),
+        (160, 180)]
+
+      pacmanCoords = [
+        (480, 180),
+        (500, 180),
+        (520, 180),
+        (540, 180),
+        (480, 200),
+        (500, 200),
+        (520, 200),
+        (540, 200),
+        (480, 220),
+        (500, 220),
+        (520, 220),
+        (540, 220),
+        (480, 240),
+        (500, 240),
+        (520, 240),
+        (540, 240)]
+
+      marioCoords =  [
+        (100, 540),
+        (80, 540),
+        (60, 540),
+        (40, 540),
+        (100, 520),
+        (80, 520),
+        (60, 520),
+        (40, 520),
+        (100, 500),
+        (80, 500),
+        (60, 500),
+        (40, 500),
+        (100, 480),
+        (80, 480),
+        (60, 480),
+        (40, 480)]
+
+      gasterCoords = [
+        (680, 480),
+        (700, 480),
+        (720, 480),
+        (740, 480),
+        (680, 500),
+        (700, 500),
+        (720, 500),
+        (740, 500),
+        (680, 520),
+        (700, 520),
+        (720, 520),
+        (740, 520),
+        (680, 540),
+        (700, 540),
+        (720, 540),
+        (740, 540),
+      ]
 
       touche = event.keysym
 
@@ -1798,9 +1911,9 @@ def script():
           LinkFrame.title("Link")
           LinkFrame.geometry("200x100")
 
-          LinkLabel = Label(LinkFrame, text="Tout le monde m'appelle Zelda \n Mais je m'appelle Hakim !", font=("Arial", 10))
+          LinkLabel = Label(LinkFrame, text="Je voulais retrouver Zelda \nmais je me suis perdu !", font=("Arial", 10))
           LinkLabel.pack(padx=10)
-          LinKQuitBtn = Button(LinkFrame, text="Hakim Forever !", command=link_quit, background="aquamarine1")
+          LinKQuitBtn = Button(LinkFrame, text="OK", command=link_quit, background="aquamarine1")
           LinKQuitBtn.pack(side=BOTTOM, pady=10)
 
           LinkFrame.mainloop()
@@ -1812,9 +1925,9 @@ def script():
           pacmanFrame.title("Pac Man")
           pacmanFrame.geometry("200x100")
 
-          pacmanLabel = Label(pacmanFrame, text="Waka Waka", font=("Arial", 10))
+          pacmanLabel = Label(pacmanFrame, text="J'ai faim mais les \nfantômes n'existent plus !", font=("Arial", 10))
           pacmanLabel.pack(padx=10)
-          pacmanQuitBtn = Button(pacmanFrame, text="Ehh Ehh", command=pacman_quit, background="aquamarine1")
+          pacmanQuitBtn = Button(pacmanFrame, text="OK", command=pacman_quit, background="aquamarine1")
           pacmanQuitBtn.pack(side=BOTTOM, pady=10)
 
           pacmanFrame.mainloop()
@@ -1827,15 +1940,14 @@ def script():
           marioFrame.title("Mario")
           marioFrame.geometry("200x100")
 
-          marioLabel = Label(marioFrame, text="'It's a me, Mario' \n(en italien)", font=("Arial", 10))
+          marioLabel = Label(marioFrame, text="'Woohaaaa' \n(en italien)", font=("Arial", 10))
           marioLabel.pack(padx=10)
-          marioQuitBtn = Button(marioFrame, text="Yahoo !", command=mario_quit, background="aquamarine1")
+          marioQuitBtn = Button(marioFrame, text="OK", command=mario_quit, background="aquamarine1")
           marioQuitBtn.pack(side=BOTTOM, pady=10)
 
           marioFrame.mainloop()
 
         elif (easterCoords in gasterCoords):
-          Gaster = False
           grid_easter.delete("all")
           grid_easter.create_image(0, 0, anchor=NW, image=MapPixelArtEasterNoGaster)
           rectangleEaster = grid_easter.create_image(easterCoords[0], easterCoords[1], image=sprite, anchor=NW)
@@ -1843,9 +1955,7 @@ def script():
 
         
           
-
-    def escape_easter():
-      easterFrame.destroy()
+        
       
     #TKINTER SALLE EASTER EGGS#
     
@@ -1884,10 +1994,7 @@ def script():
     bottomFrame = Frame(easterFrame)
     bottomFrame.pack(side=BOTTOM)
 
-    EscapeBtn = Button(bottomFrame, text="QUITTER LE JEU", background="red1", command=escape_easter)
-    EscapeBtn.pack(side=TOP)
-
-    CanvaBottomEaster = Canvas(bottomFrame, width=800, height=125)
+    CanvaBottomEaster = Canvas(bottomFrame, width=800, height=168)
     BottomImage = PhotoImage(file="textures/deplacement/bottom.png")
     BottomEaster = CanvaBottomEaster.create_image(0,0, image=BottomImage, anchor=NW)
     CanvaBottomEaster.pack()
@@ -1919,14 +2026,17 @@ def script():
 
   #TKINTER SALLE PRINCIPALE#
 
-  def escape():
-    mainFrame.destroy()
-  
-
   #On crée la fenêtre principale
   mainFrame = Tk()
   mainFrame.title("Memory Game | Thomas & Gabriel")
   mainFrame.geometry("800x600")
+
+  global MIReussiCanvaCle
+  MIReussiCanvaCle = PhotoImage(file="textures/cles/cle_images_memory.png")
+  global MVReussiCanvaCle
+  MVReussiCanvaCle = PhotoImage(file="textures/cles/cle_verbal_memory.png")
+  global MNReussiCanvaCle
+  MNReussiCanvaCle = PhotoImage(file="textures/cles/cle_number_memory.png")
 
   mainFrame.attributes("-fullscreen", True)
 
@@ -1954,13 +2064,13 @@ def script():
   bottomFrame = Frame(mainFrame)
   bottomFrame.pack(side=BOTTOM)
 
-  EscapeBtn = Button(bottomFrame, text="QUITTER LE JEU", background="red1", command=escape)
-  EscapeBtn.pack(side=TOP)
-
-  CanvaBottom = Canvas(bottomFrame, width=800, height=125)
+  CanvaBottom = Canvas(bottomFrame, width=800, height=168)
   BottomImage = PhotoImage(file="textures/deplacement/bottom.png")
   Bottom = CanvaBottom.create_image(0,0, image=BottomImage, anchor=NW)
   CanvaBottom.pack()
+
+
+
 
 
   #On crée un tableau dans lequel le sprite se déplace
@@ -1992,6 +2102,12 @@ def script():
 
   #On ouvre la fenêtre pincipale
   update_inventory()
+  print(
+    "verbal:", key_verbal_memory,
+    "\nnumber", key_number_memory,
+    "\nimages", key_images_memory
+  )
+
   mainFrame.mainloop()
 
 #FONCTION DU DEMARRAGE
@@ -2017,7 +2133,7 @@ def startGame():
     scrollbarCredits.pack(side=RIGHT, fill=Y)
     
     creditsText.tag_configure("center", justify='center')
-    creditsText.insert(END, "Le jeu 'Memory Game' a été réalisé par\nThomas KELEMEN & Gabriel CADEAU-FLAUJAT,\ndeux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\nLe jeu 'Memory Game' a été inspiré de la plateforme de jeu 'Human Benchmark'.\n\n Développement :\n'Memory Game' a été développé entierement par Thomas KELEMEN et Gabriel CADEAU-FLAUJAT.\n\nTextures :\nLes textures du jeu ont été réalisées par\n Gabriel CADEAU-FLAUJAT.\nCertaines textures, libres de droits vienent du site de ressources 'OpenGameArt'.\n\nRemerciements :\nUn grand merci à Cédric ESCOUTE, professeur de NSI, sans qui le projet n'aurait pas pu voir le jour.\nMerci à Quentin PLADEAU, qui a aidé sur l'aspect programmation du projet.\n\nInformations supplémentaires :\n'Memory Game' est un jeu programmé entièremment dans le language de programmation Python.\nL'aspect graphique du jeu a été assuré par al librairie Tkinter, native à Python\n\n'Memory Game' est un jeu soumis aux droits d'auteurs et est soumis à la propriété intellectuelle de\nThomas KELEMEN et Gabriel CADEAU-FLAUJAT\nCe jeu est destiné à un usage personnel et non commercial. Vous pouvez le partager avec des amis et des proches, mais toute distribution à des fins commerciales est strictement interdite sans autorisation préalable.\nEn utilisant ce jeu, vous acceptez de vous conformer à toutes les lois et réglementations en vigueur en France concernant les droits d'auteur, la propriété intellectuelle et toute autre loi applicable.\n \n","center")
+    creditsText.insert(END, "Le jeu 'Memory Game' a été réalisé par\nThomas KELEMEN & Gabriel CADEAU-FLAUJAT,\ndeux élèves de première NSI, passionnés par coder les idées de programmes leur passant par la tête.\nLe jeu 'Memory Game' a été inspiré de la plateforme de jeu 'Human Benchmark'.\n\n Développement :\n'Memory Game' a été développé entierement par Thomas KELEMEN et Gabriel CADEAU-FLAUJAT.\n\nTextures :\nLes texture de la map et des clés ont été réalisées par\n Gabriel CADEAU-FLAUJAT.\nCertaines textures, libres de droits vienent du site de ressources 'OpenGameArt'.\n\nRemerciements :\nUn grand merci à Cédric ESCOUTE, professeur de NSI, sans qui le projet n'aurait pas pu voir le jour.\nMerci à Quentin PLADEAU, qui a aidé sur l'aspect programmation du projet.\n\nInformations supplémentaires :\n'Memory Game' est un jeu programmé entièremment dans le language de programmation Python.\nL'aspect graphique du jeu a été assuré par al librairie Tkinter, native à Python\n\n'Memory Game' est un jeu soumis aux droits d'auteurs et est soumis à la propriété intellectuelle de\nThomas KELEMEN et Gabriel CADEAU-FLAUJAT\nCe jeu est destiné à un usage personnel et non commercial. Vous pouvez le partager avec des amis et des proches, mais toute distribution à des fins commerciales est strictement interdite sans autorisation préalable.\nEn utilisant ce jeu, vous acceptez de vous conformer à toutes les lois et réglementations en vigueur en France concernant les droits d'auteur, la propriété intellectuelle et toute autre loi applicable.\n \n","center")
     creditsText.config(state=DISABLED)
     creditsQuitButton = Button(creditsText, text="OK", command=credits_quit, background="aquamarine1")
 
@@ -2126,7 +2242,7 @@ def startGame():
   #On crée la fenêtre et les différents éléments du menu de démarrage du jeu
   StartFenetre = Tk()
   StartFenetre.title("Memory Game | Thomas & Gabriel")
-  StartFenetre.geometry("750x600")
+  StartFenetre.geometry("750x400")
 
   StartTitleFrame = Frame(StartFenetre, borderwidth=1, relief=GROOVE)
   StartTitleFrame.pack(side=TOP,padx=10, pady=10)
@@ -2134,11 +2250,6 @@ def startGame():
   StartTitleLabel.pack(side=TOP)
   StartSubtitleLabel = Label(StartTitleFrame, text="Un jeu par Thomas KELEMEN et Gabriel CADEAU-FLAUJAT", font=("Arial", 15))
   StartSubtitleLabel.pack(side=TOP)
-
-  CanvaImageTitle = Canvas(StartFenetre, width=320, height=180)
-  memorygameImage = PhotoImage(file="textures/memorygame.png")
-  CanvaImageTitle.create_image(0, 0, image=memorygameImage, anchor=NW)
-  CanvaImageTitle.pack(side=TOP, pady=5)
 
   LicenseLabel = Label(StartFenetre, text="Memory Game, Thomas KELEMEN & Gabriel CADEAU-FLAUJAT \n © Tous droits réservés. 2024 ")
   LicenseLabel.pack(side=BOTTOM)
