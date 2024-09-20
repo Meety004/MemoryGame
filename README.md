@@ -61,12 +61,12 @@ Afin d'accéder à la salle du boss, vous devez rassembler les clés des autres 
 Afin d'accéder à la salle secrète du jeu, utilisez les différents éléments qui sont à votre disposition dans la salle principale.
 
 
-Si vous voulez découvrir comment accéder à la salle secrète par vous-même, ne lisez pas l'encadré qui suit.
+### Si vous voulez découvrir comment accéder à la salle secrète par vous-même, ne lisez pas l'encadré qui suit. ###
 
- .-----------------------------------------------------------.
+`
 Aprés avoir gagné dans chaque mini-jeu (boss compris) jusqu'a ce qu'un bout de phrase apparaisse dans chaque salle.
 Vous devez trouver un moyen de décrypter ces morceaux de phrases qui vous quideront dans la salle secrète.
- '-----------------------------------------------------------'
+`
 
 #####################
 
